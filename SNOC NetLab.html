@@ -1,0 +1,634 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1642d8">
+<title>SNOC NetLab</title>
+<style>
+:root{--bg:#f1f4f8;--pn:#fff;--ln:#d3dbe5;--tx:#14202e;--mu:#586a80;--ac:#1f5fd1;--on:#fff;--ok:#12874f;--wn:#b85f00;--sv:#e8eef6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--pn:#121b2d;--ln:#26344d;--tx:#e7edf7;--mu:#93a4bf;--ac:#5aa2ff;--on:#07101f;--ok:#3fd08b;--wn:#f4b13d;--sv:#182540}}
+:root[data-theme="dark"]{--bg:#0b1220;--pn:#121b2d;--ln:#26344d;--tx:#e7edf7;--mu:#93a4bf;--ac:#5aa2ff;--on:#07101f;--ok:#3fd08b;--wn:#f4b13d;--sv:#182540}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif}
+.app{display:grid;grid-template-columns:310px minmax(0,1fr);gap:12px;padding:12px;max-width:1240px;margin:0 auto}
+@media (max-width:860px){.app{grid-template-columns:1fr}}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:10px;padding:12px}
+h1{font-size:19px;margin:0 0 2px}h3{font-size:15px;margin:14px 0 6px}h3:first-child{margin-top:0}
+p{margin:6px 0}.mu{color:var(--mu)}
+button{font:inherit;color:var(--tx);background:var(--sv);border:1px solid var(--ln);border-radius:7px;padding:6px 10px;cursor:pointer}
+button:hover{border-color:var(--ac)}button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+button.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.ls{display:flex;flex-direction:column;gap:5px}.ls button{text-align:left}
+.tk{list-style:none;padding:0;margin:8px 0}.tk li{padding:6px 0 6px 24px;position:relative;border-top:1px solid var(--ln)}
+.tk li::before{content:"○";position:absolute;left:2px;color:var(--mu)}.tk li.ok::before{content:"✓";color:var(--ok);font-weight:700}
+.tk li.ok span{color:var(--mu)}details{font-size:13px;color:var(--mu)}summary{cursor:pointer}
+.win{background:var(--sv);border:1px solid var(--ok);border-radius:8px;padding:8px}
+.bar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:8px}.bar .sp{flex:1}
+#st{min-height:22px;font-size:13px;color:var(--wn)}
+svg{width:100%;height:auto;display:block;background:var(--sv);border-radius:8px;touch-action:none;user-select:none}
+svg text{fill:var(--tx);font-family:inherit}svg .mu,svg .pl{fill:var(--mu)}
+.frm{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-end;margin-bottom:8px}
+.frm label{display:flex;flex-direction:column;font-size:12px;color:var(--mu)}
+input{font:inherit;font-size:16px;color:var(--tx);background:var(--pn);border:1px solid var(--ln);border-radius:6px;padding:5px 7px;width:150px;max-width:100%}
+.term{background:#0b1417;color:#c8f3dc;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:8px;border-radius:8px 8px 0 0;height:200px;overflow:auto;white-space:pre-wrap;margin:0}
+.in{display:flex;gap:6px;background:#0b1417;border-radius:0 0 8px 8px;padding:0 8px 8px;font:13px ui-monospace,Menlo,Consolas,monospace;color:#c8f3dc}
+.in input{flex:1;width:auto;min-width:0;background:transparent;border:0;color:#c8f3dc;padding:0;font-family:inherit;outline:0}
+.top{display:flex;gap:6px;flex-wrap:wrap;align-items:center;max-width:1240px;margin:0 auto;padding:12px 12px 0}.top .sp{flex:1}.wide{max-width:900px;margin:12px auto}[hidden]{display:none!important}.opt{display:block;width:100%;text-align:left;margin:6px 0}.opt.good{border-color:var(--ok);border-width:2px}.opt.badc{border-color:var(--wn);border-width:2px}.bx{margin:8px 0;padding:8px;border-radius:8px;background:var(--sv)}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--ln);padding:6px;text-align:left;font-size:14px}h2{font-size:18px;margin:0 0 6px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:10px 0}.grid button{padding:12px;text-align:left;font-weight:600}progress{width:100%;height:14px;accent-color:var(--ok)}.rf{font-size:14px;color:var(--tx);margin:8px 0}.rf pre{background:#0b1417;color:#c8f3dc;padding:8px;border-radius:8px;overflow:auto;font-size:13px}.brand{font-size:17px;margin-right:8px}.stats,.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.stat{background:var(--sv);border:1px solid var(--ln);border-radius:10px;padding:10px}.stat b{display:block;font-size:24px}.stat span{font-size:13px;color:var(--mu)}.tile{padding:14px;text-align:left;border-radius:12px;background:var(--pn)}.tile b{display:block;font-size:16px}.tile span{font-size:13px;color:var(--mu)}.wk{display:flex;gap:6px}.dy{flex:1;text-align:center;font-size:12px;color:var(--mu)}.dy i{display:block;height:34px;border-radius:6px;background:var(--sv);border:1px solid var(--ln);margin-bottom:3px}.dy i.s1{background:color-mix(in srgb,var(--ok) 40%,var(--sv))}.dy i.s2{background:var(--ok)}.tp{display:grid;grid-template-columns:minmax(110px,200px) 1fr 54px;gap:8px;align-items:center;margin:4px 0;font-size:14px}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{padding:4px 10px;border-radius:20px;font-size:13px}.chip.ok{border-color:var(--ok)}
+</style>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('netlab-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--bg:#f3efe8;--pn:rgba(255,255,255,.8);--ln:rgba(16,26,51,.12);--tx:#101a33;--mu:#5a6580;--ac:#2556f5;--ac2:#f2762e;--on:#fff;--ok:#0c9a73;--wn:#cf5f0a;--sv:#e9edf7;--sh:0 1px 2px rgba(16,26,51,.05),0 18px 36px -18px rgba(37,86,245,.28);--glow:rgba(37,86,245,.4);--dot:rgba(16,26,51,.08);--mesh:radial-gradient(900px 520px at 6% -8%,rgba(37,86,245,.17),transparent 60%),radial-gradient(760px 480px at 100% 2%,rgba(242,118,46,.2),transparent 55%)}
+:root[data-theme="dark"]{--bg:#060a18;--pn:rgba(15,23,48,.74);--ln:rgba(140,170,255,.16);--tx:#e9eefc;--mu:#98a5c6;--ac:#5b8cff;--ac2:#ffb25b;--on:#061030;--ok:#3be8ad;--wn:#ffb25b;--sv:#0d1530;--sh:0 1px 0 rgba(255,255,255,.04) inset,0 22px 44px -20px rgba(0,0,0,.85);--glow:rgba(91,140,255,.5);--dot:rgba(160,185,255,.1);--mesh:radial-gradient(900px 560px at 4% -10%,rgba(91,140,255,.3),transparent 60%),radial-gradient(760px 520px at 100% 0%,rgba(59,232,173,.15),transparent 55%)}
+html{background:var(--bg)}
+body{font:15px/1.55 Figtree,"Segoe UI",system-ui,sans-serif;color:var(--tx);min-height:100vh;background:var(--mesh),radial-gradient(var(--dot) 1px,transparent 1.6px) 0 0/22px 22px,var(--bg);background-attachment:fixed}
+h1,h2,h3,.brand,.stat b,.tile b{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif}
+h1{font-size:20px;font-weight:800}h2{font-size:28px;font-weight:800;letter-spacing:-.025em;margin:0 0 6px}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--mu);font-weight:700;margin:4px 0 10px}
+.card,.box{background:var(--pn);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--ln);border-radius:20px;box-shadow:var(--sh);padding:18px;animation:rise .5s both}
+.box{margin-top:14px}#vh{background:none;border:0;box-shadow:none;padding:0;-webkit-backdrop-filter:none;backdrop-filter:none;max-width:1100px}
+.top{position:sticky;top:8px;z-index:5;width:calc(100% - 24px);max-width:1216px;margin:10px auto 0;padding:7px 10px;background:var(--pn);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid var(--ln);border-radius:22px;box-shadow:var(--sh)}
+.brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:800;margin:0 8px 0 4px}.brand em{font-style:normal;color:var(--ac2)}
+.lg{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 6px 16px -6px var(--glow)}.lg svg{width:18px;height:18px;fill:#fff;stroke:#fff;stroke-width:1.6;stroke-linecap:round}
+button{font:600 14px Figtree,system-ui,sans-serif;position:relative;overflow:hidden;color:var(--tx);background:var(--pn);border:1px solid var(--ln);border-radius:12px;padding:8px 14px;cursor:pointer;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,border-color .2s,background .2s}
+button::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.38) 50%,transparent 70%);transform:translateX(-120%);transition:transform .65s;pointer-events:none}
+button:hover{transform:translateY(-2px);border-color:var(--ac);box-shadow:0 10px 22px -10px var(--glow)}button:hover::after{transform:translateX(120%)}
+button:active{transform:translateY(0) scale(.97);box-shadow:none}
+button.on{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 50%,var(--ac2)));color:var(--on);border-color:transparent;box-shadow:0 10px 24px -10px var(--glow)}
+.top button{border-radius:999px;border-color:transparent;background:transparent}.top button:hover{background:var(--sv)}.top button.on,.top button.on:hover{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 50%,var(--ac2)))}
+#th{border-color:var(--ln)}
+input,textarea{border-radius:10px;border:1px solid var(--ln);background:var(--sv);transition:box-shadow .2s,border-color .2s}input:focus,textarea:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px var(--glow)}
+svg#map{background:radial-gradient(var(--dot) 1.2px,transparent 1.7px) 0 0/20px 20px,var(--sv);border:1px solid var(--ln);border-radius:16px}
+#map [data-d]{filter:drop-shadow(0 6px 9px var(--glow))}#map [data-l] line:first-child{stroke-linecap:round;stroke-dasharray:9 7;animation:flow 1.1s linear infinite}
+.term,.in{background:#050913;font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}.term{border:1px solid var(--ln)}.in{border:1px solid var(--ln);border-top:0}
+.tk li{border:1px solid var(--ln);border-radius:12px;margin:7px 0;padding:10px 12px 10px 42px;background:var(--sv);transition:transform .2s}.tk li:hover{transform:translateX(3px)}
+.tk li::before{content:"";left:12px;top:13px;width:16px;height:16px;border-radius:50%;border:2px solid var(--mu);display:grid;place-items:center;font-size:10px}.tk li.ok::before{content:"\2713";background:var(--ok);border-color:var(--ok);color:#fff}
+.win{background:linear-gradient(135deg,color-mix(in srgb,var(--ok) 22%,transparent),transparent);border-color:var(--ok)}
+.opt{padding:12px 14px;border-radius:14px}.opt:hover:not(:disabled){transform:translateX(4px)}.opt.good{background:color-mix(in srgb,var(--ok) 20%,var(--pn))}.opt.badc{background:color-mix(in srgb,var(--wn) 20%,var(--pn))}
+progress{-webkit-appearance:none;appearance:none;height:10px;border:0;border-radius:99px;background:var(--sv);overflow:hidden}progress::-webkit-progress-bar{background:var(--sv);border-radius:99px}progress::-webkit-progress-value{background:linear-gradient(90deg,var(--ac),var(--ok));border-radius:99px;transition:width .6s}progress::-moz-progress-bar{background:linear-gradient(90deg,var(--ac),var(--ok));border-radius:99px}
+.hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-radius:24px;padding:28px;color:#fff;background:linear-gradient(120deg,#0a1b57 0%,#1642d8 52%,#14a3b8 110%);box-shadow:0 24px 50px -24px rgba(22,66,216,.7);animation:rise .5s both}
+.hero h2{font-size:clamp(28px,5vw,42px);color:#fff;margin:2px 0 6px}.hero p{margin:4px 0;color:rgba(255,255,255,.86)}.hero .kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#ffc58f;font-weight:700}
+.hero .net{position:absolute;right:130px;top:-6px;width:300px;opacity:.55;pointer-events:none}.hero>div{position:relative}
+.pill{display:inline-block;margin:8px 8px 0 0;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);font-size:13px;font-weight:600}
+.ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#ffb25b calc(var(--p)*1%),rgba(255,255,255,.2) 0);position:relative;text-align:center;line-height:1.1}.ring::before{content:"";position:absolute;inset:9px;border-radius:50%;background:#0d2a8c}.ring b{position:relative;font:800 24px "Bricolage Grotesque",sans-serif;display:block}.ring span{position:relative;font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.8;display:block}
+.tiles{margin:14px 0}.tile{display:flex;flex-direction:column;gap:3px;align-items:flex-start;padding:16px;border-radius:18px;animation:rise .5s both}.tile:nth-child(2){animation-delay:.05s}.tile:nth-child(3){animation-delay:.1s}.tile:nth-child(4){animation-delay:.15s}.tile:nth-child(5){animation-delay:.2s}
+.tile i{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;margin-bottom:6px;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 18px -8px var(--glow);transition:transform .25s}.tile:hover i{transform:rotate(-6deg) scale(1.08)}
+.tile svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.tile b{font-size:17px}.tile span{font-size:13px;color:var(--mu);font-weight:500}
+.stat{border-radius:16px;background:var(--pn);box-shadow:var(--sh);border:1px solid var(--ln);position:relative;overflow:hidden}.stat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--ac),var(--ac2))}
+.stat b{font-size:32px;font-weight:800;line-height:1.1;background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:820px){.cols{grid-template-columns:1fr}.hero .net{display:none}}
+.dy i{border-radius:8px}.chip{border-radius:99px}.chip.ok{background:color-mix(in srgb,var(--ok) 16%,var(--pn))}
+td,th{border-bottom:1px solid var(--ln)}
+details.box>summary{list-style:none;display:flex;flex-wrap:wrap;gap:10px;align-items:center;cursor:pointer}details.box>summary::-webkit-details-marker{display:none}
+.box.tip{border-left:4px solid var(--ac2)}
+#gate{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;overflow:auto;background:var(--mesh),var(--bg)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}@keyframes flow{to{stroke-dashoffset:-16}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+<div id="gate" hidden></div><nav class="top"><b class="brand"><span class="lg"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M8 7h8M7 9l4 6M17 9l-4 6" fill="none"/></svg></span>SNOC <em>NetLab</em></b><button data-v="vh" class="on">Dashboard</button><button data-v="labs">Labs</button><button data-v="vq">Quiz</button><button data-v="vd">Daily tasks</button><button data-v="vr">Cheat sheet</button><button data-v="vt" hidden>Admin</button><span class="sp"></span><span class="mu" id="who"></span><button id="lo" hidden>Log out</button><button id="th">Dark mode</button></nav>
+<section class="card wide" id="vh"></section><section class="card wide" id="vr" hidden></section><section class="card wide" id="vq" hidden></section><section class="card wide" id="vd" hidden></section><section class="card wide" id="vt" hidden></section>
+<div class="app" id="labs" hidden>
+<aside class="card" id="side"></aside>
+<main>
+<div class="card">
+<div class="bar"><h1>Network lab</h1><span class="sp"></span>
+<button data-t="sel">Move</button><button data-t="cable">Cable</button><button data-t="del">Delete</button>
+<button data-add="pc">+ PC</button><button data-add="sw">+ Switch</button><button data-add="rt">+ Router</button>
+<button id="rs">Reset lab</button></div>
+<div id="st" role="status"></div>
+<svg id="map" viewBox="0 0 800 420" role="img" aria-label="Network map"></svg>
+</div>
+<div class="card" id="panel" style="margin-top:12px"></div>
+</main></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let S={devs:[],links:[],sel:null,tool:'sel',cf:null,nid:1,L:0,latch:{},pings:{},used:{}},done={},drag=null;
+try{done=JSON.parse(localStorage.getItem('netlab')||'{}')}catch(e){}
+const saveDone=()=>{try{localStorage.setItem('netlab',JSON.stringify(done))}catch(e){}if(window.syncP)syncP()};
+const dev=id=>S.devs.find(d=>d.id==id),K=k=>S.devs.find(d=>d.k==k),nm=d=>d.type=='pc'?d.k:d.host;
+const PORTS={pc:['Fa0'],sw:[1,2,3,4,5,6,7,8].map(i=>'Fa0/'+i),rt:['Gi0/0','Gi0/1','Gi0/2']};
+const ip2n=s=>{const p=String(s).split('.');if(p.length!=4||p.some(x=>!/^\d+$/.test(x)||+x>255))return null;return((+p[0]<<24)|(+p[1]<<16)|(+p[2]<<8)|+p[3])>>>0};
+const validMask=m=>{const n=ip2n(m);return n!=null&&/^1*0*$/.test(n.toString(2).padStart(32,'0'))};
+const same=(a,m,b)=>ip2n(a)!=null&&ip2n(b)!=null&&validMask(m)&&((ip2n(a)&ip2n(m))>>>0)===((ip2n(b)&ip2n(m))>>>0);
+const linked=(d,p)=>S.links.some(l=>(l.a==d.id&&l.ap==p)||(l.b==d.id&&l.bp==p));
+const msg=t=>{$('#st').textContent=t||''};
+function mk(type,x,y,k){const n=S.devs.filter(d=>d.type==type).length+1;
+ const d={id:S.nid++,type,x,y,k:k||({pc:'PC',sw:'SW',rt:'R'}[type]+n),log:[],mode:0,cur:null};
+ if(type=='pc')Object.assign(d,{ip:'',mask:'255.255.255.0',gw:''});
+ else{d.host=type=='rt'?'Router':'Switch';if(type=='rt')d.routes=[];d.ifs={'Gi0/0':{ip:'',mask:'',up:0},'Gi0/1':{ip:'',mask:'',up:0},'Gi0/2':{ip:'',mask:'',up:0}}}
+ S.devs.push(d);return d}
+/* layer 2: which endpoints can this port reach through switches */
+function l2(id,port){const res=[],seen=new Set([id]),q=[[id,port]];
+ while(q.length){const[n,p]=q.shift();
+  for(const l of S.links){let o=null;
+   if(l.a==n&&(p==null||l.ap==p))o=[l.b,l.bp];else if(l.b==n&&(p==null||l.bp==p))o=[l.a,l.ap];
+   if(!o)continue;const d=dev(o[0]);
+   if(d.type=='sw'){if(!seen.has(d.id)){seen.add(d.id);q.push([d.id,null])}}
+   else if(d.id!=id)res.push({d,p:o[1]})}}
+ return res}
+const hit=(res,ip)=>res.find(e=>e.d.type=='pc'?e.d.ip==ip:e.d.ifs[e.p].up&&e.d.ifs[e.p].ip==ip);
+const outIf=(R,dst)=>Object.keys(R.ifs).find(k=>{const f=R.ifs[k];return f.up&&f.ip&&linked(R,k)&&same(f.ip,f.mask,dst)});
+function ping(s,dst){const ok=m=>({ok:1,m:'Reply from '+dst+': bytes=32 time<1ms TTL='+m}),no=m=>({ok:0,m});
+ if(!s.ip)return no('Set an IP address on this PC first.');
+ if(ip2n(dst)==null)return no('Invalid IP address.');
+ if(dst==s.ip)return ok(128);
+ const r0=l2(s.id,null);
+ if(same(s.ip,s.mask,dst))return hit(r0,dst)?ok(128):no('Request timed out. No cable path to '+dst+', or that device is not configured or not up.');
+ if(!s.gw)return no('Destination is on another network and this PC has no default gateway.');
+ if(!same(s.ip,s.mask,s.gw))return no('The default gateway is not on this PC’s own subnet.');
+ const g=hit(r0,s.gw);if(!g||g.d.type!='rt')return no('Request timed out. The gateway '+s.gw+' can’t be reached (cabling, IP or no shutdown?).');
+ const R=g.d;if(Object.values(R.ifs).some(f=>f.up&&f.ip==dst))return ok(255);
+ const out=outIf(R,dst);if(!out)return no('Reply from '+s.gw+': Destination host unreachable. The router has no connected network containing '+dst+'.');
+ const t=hit(l2(R.id,out),dst);if(!t)return no('Request timed out. The router sent it out '+out+' but nothing answered.');
+ const T=t.d;if(!T.gw||!same(T.ip,T.mask,T.gw))return no('Request timed out. The target has no usable default gateway, so its reply can’t get back.');
+ const back=hit(l2(T.id,null),T.gw);if(!back||back.d!=R)return no('Request timed out. The reply from '+dst+' has no path back.');
+ return ok(127)}
+function cable(a,b){if(a==b)return msg('Pick two different devices.');const A=dev(a),B=dev(b);
+ if(S.links.some(l=>(l.a==a&&l.b==b)||(l.a==b&&l.b==a)))return msg('Those two are already cabled.');
+ const pa=PORTS[A.type].find(p=>!linked(A,p)),pb=PORTS[B.type].find(p=>!linked(B,p));
+ if(!pa||!pb)return msg('No free port on '+nm(pa?B:A)+'.');
+ S.links.push({a,ap:pa,b,bp:pb});msg('Cabled '+nm(A)+' '+pa+' to '+nm(B)+' '+pb+'.');changed()}
+/* Cisco-style CLI */
+const HELP=[['enable','ping <ip>'],['configure terminal','show ip interface brief','show running-config','ping <ip>','disable'],['hostname <name>','interface <type/number>   e.g. gi0/0','end'],['ip address <ip> <mask>','no shutdown','shutdown','exit','end']];
+const prompt=d=>d.type=='pc'?'C:\\>':nm(d)+['>','#','(config)#','(config-if)#'][d.mode];
+const ifName=s=>{const m=/^(?:g|gi|gig|gigabit)\w*?(\d\/\d)$/.exec(s.toLowerCase());return m?'Gi'+m[1]:null};
+function cping(d,ip){if(!ip||ip2n(ip)==null)return['% Invalid input detected.'];
+ if(d.type!='rt')return['Ping from a switch isn’t modelled in this lab. Use a PC.'];
+ let ok=Object.values(d.ifs).some(f=>f.up&&f.ip==ip);
+ if(!ok){const o=outIf(d,ip);if(o)ok=!!hit(l2(d.id,o),ip)}
+ return['Sending 5, 100-byte ICMP Echos to '+ip+', timeout is 2 seconds:',ok?'!!!!!':'.....','Success rate is '+(ok?100:0)+' percent ('+(ok?5:0)+'/5)']}
+function show(d,x){const is=(i,f)=>x[i]&&f.startsWith(x[i]);if(is(1,'ip')&&is(2,'route')&&d.ifs)return showRoute(d);S.used[is(1,'ip')?'brief':'run']=1;runChecks();
+ if(is(1,'ip')&&is(2,'interface')){const o=['Interface          IP-Address      Status                Protocol'];
+  PORTS[d.type].forEach(p=>{const f=d.ifs&&d.ifs[p],l=linked(d,p),st=f&&!f.up?'administratively down':l?'up':'down';
+   o.push(p.padEnd(19)+((f&&f.ip)||'unassigned').padEnd(16)+st.padEnd(22)+(st=='up'?'up':'down'))});return o}
+ if(x[1]&&'running-config'.startsWith(x[1])&&x[1].length>=3){const o=['hostname '+d.host,'!'];
+  if(d.ifs)Object.keys(d.ifs).forEach(p=>{const f=d.ifs[p];o.push('interface GigabitEthernet'+p.slice(2),f.ip?' ip address '+f.ip+' '+f.mask:' no ip address',f.up?'':' shutdown','!')});return o}
+ return['% Invalid input detected.']}
+function ios(d,line){const w=line.trim().split(/\s+/).filter(Boolean),bad=['% Invalid input detected.'];if(!w.length)return[];
+ if(w[0].toLowerCase()=='do')w.shift();const x=w.map(s=>s.toLowerCase()),is=(i,f)=>x[i]&&f.startsWith(x[i]);
+ if(x[0]=='?')return HELP[d.mode];
+ if(is(0,'show')&&x[0].length>=2&&d.mode>0)return show(d,x);
+ if(is(0,'ping')&&d.mode<2)return cping(d,w[1]);
+ if(d.mode==0){if(is(0,'enable')&&x[0].length>=2){d.mode=1;return[]}return bad}
+ if(d.mode==1){if(is(0,'configure')&&x[0].length>=4&&(!x[1]||is(1,'terminal'))){d.mode=2;return['Enter configuration commands, one per line. End with CNTL/Z.']}
+  if(is(0,'disable')&&x[0].length>=3||x[0]=='exit'){d.mode=0;return[]}return bad}
+ if(d.mode>=2){
+  if(d.mode==2&&d.type=='rt'&&x[0]=='no'&&is(1,'ip')&&is(2,'route')){d.routes=d.routes.filter(r=>!(r.n==w[3]&&r.m==w[4]));changed();return[]}
+  if(d.mode==2&&d.type=='rt'&&x[0]=='ip'&&is(1,'route')){if(!(ip2n(w[2]||'')!=null&&validMask(w[3]||'')&&ip2n(w[4]||'')!=null))return['% Invalid command. Use: ip route network mask next-hop'];d.routes.push({n:w[2],m:w[3],h:w[4]});changed();return[]}
+  if(is(0,'hostname')&&x[0].length>=4&&w[1]){d.host=w[1];return[]}
+  if(is(0,'interface')&&x[0].length>=2){if(d.type=='sw')return['This lab’s switch needs no port configuration. Ports work as soon as they are cabled.'];
+   const n=ifName(x.slice(1).join(''));if(!n||!d.ifs[n])return bad;d.mode=3;d.cur=n;return[]}
+  if(x[0]=='end'){d.mode=1;return[]}
+  if(x[0]=='exit'){d.mode=d.mode==3?2:1;return[]}
+  if(d.mode==3){const f=d.ifs[d.cur];
+   if(is(0,'ip')&&is(1,'address')){if(!w[2])return['% Incomplete command.'];if(ip2n(w[2])==null)return['% Invalid IP address.'];if(!validMask(w[3]||''))return['% Invalid or missing subnet mask.'];f.ip=w[2];f.mask=w[3];changed();return[]}
+   if(x[0]=='no'&&is(1,'shutdown')){f.up=1;changed();return linked(d,d.cur)?['%LINK-5-CHANGED: Interface GigabitEthernet'+d.cur.slice(2)+', changed state to up']:[]}
+   if(is(0,'shutdown')&&x[0].length>=4){f.up=0;changed();return['%LINK-5-CHANGED: Interface GigabitEthernet'+d.cur.slice(2)+', changed state to administratively down']}
+  }
+  return bad}
+ return bad}
+function pcCli(d,line){const w=line.trim().split(/\s+/),c=(w[0]||'').toLowerCase();if(!c)return[];
+ if(c=='ipconfig')return['IPv4 Address. . . : '+(d.ip||'not set'),'Subnet Mask . . . : '+d.mask,'Default Gateway . : '+(d.gw||'not set')];
+ if(c=='ping'){const r=ping(d,w[1]||'');
+  if(r.ok)S.pings[d.k+'|'+w[1]]=1;runChecks();side();
+  return['Pinging '+w[1]+' with 32 bytes of data:'].concat(r.ok?[r.m,r.m,r.m,r.m]:[r.m],['Packets: Sent = 4, Received = '+(r.ok?4:0)])}
+ return['Commands: ipconfig, ping <ip>']}
+/* lessons */
+const ln=(a,b)=>S.links.some(l=>{const x=dev(l.a).k,y=dev(l.b).k;return(x==a&&y==b)||(x==b&&y==a)});
+const ipIs=(k,ip,m,g)=>{const d=K(k);return d.ip==ip&&(!m||d.mask==m)&&(g===undefined||d.gw==g)};
+const pg=(a,b)=>{const d=K(b);return !!(d.ip&&S.pings[a+'|'+d.ip])};
+const ifOk=(k,p,ip)=>{const f=K(k).ifs[p];return !!f.up&&f.ip==ip&&f.mask=='255.255.255.0'};
+const M='255.255.255.0';
+const LS=[
+{t:'Cable two PCs',intro:'Two computers can talk directly when they sit on the same subnet: the same network part of the IP address, as set by the mask. Wire them up and prove it with a ping.',
+ devs:[['pc',170,200,'PC1'],['pc',630,200,'PC2']],
+ tasks:[['Cable PC1 to PC2',()=>ln('PC1','PC2'),'Press Cable, then click PC1, then PC2.'],
+ ['Give PC1 192.168.1.10 and PC2 192.168.1.11, both with mask 255.255.255.0',()=>ipIs('PC1','192.168.1.10',M)&&ipIs('PC2','192.168.1.11',M),'Click a PC, fill in the form under the map, press Apply.'],
+ ['Ping PC2 from PC1',()=>pg('PC1','PC2'),'Select PC1 and type ping 192.168.1.11 in its prompt.']]},
+{t:'Add a switch',intro:'A switch connects many devices into one network. It learns nothing from you: cable it and it works at Layer 2. Put three PCs in 10.0.0.0/24.',
+ devs:[['pc',120,300,'PC1'],['pc',400,330,'PC2'],['pc',680,300,'PC3'],['sw',400,130,'SW1']],
+ tasks:[['Cable PC1, PC2 and PC3 to SW1',()=>ln('PC1','SW1')&&ln('PC2','SW1')&&ln('PC3','SW1'),'Cable tool: click a PC, then the switch. Repeat for each PC.'],
+ ['Give each PC a different address in 10.0.0.0/24 (for example 10.0.0.1, .2, .3) with mask 255.255.255.0',()=>['PC1','PC2','PC3'].every(k=>K(k).mask==M&&same(K(k).ip,M,'10.0.0.0'))&&new Set(['PC1','PC2','PC3'].map(k=>K(k).ip)).size==3,'The first three numbers stay 10.0.0, only the last one changes.'],
+ ['Ping PC3 from PC1',()=>pg('PC1','PC3'),'In PC1’s prompt: ping followed by PC3’s address.']]},
+{t:'Your first router',intro:'A router is the door out of a network. Its interface needs an IP, and Cisco interfaces start shut down, so you must turn them on with no shutdown. Your PC then uses the router’s address as its default gateway.',
+ devs:[['pc',130,210,'PC1'],['sw',400,210,'SW1'],['rt',660,210,'R1']],
+ tasks:[['Cable PC1 to SW1 and SW1 to R1',()=>ln('PC1','SW1')&&ln('SW1','R1'),'The router’s first cable becomes Gi0/0. Port names show on the map.'],
+ ['Name the router R1',()=>K('R1').host=='R1','Select R1 and type: enable, configure terminal, hostname R1'],
+ ['Set Gi0/0 to 192.168.1.1 255.255.255.0 and turn it on',()=>ifOk('R1','Gi0/0','192.168.1.1'),'interface gi0/0, ip address 192.168.1.1 255.255.255.0, no shutdown'],
+ ['Give PC1 192.168.1.10, mask 255.255.255.0, gateway 192.168.1.1',()=>ipIs('PC1','192.168.1.10',M,'192.168.1.1'),'Use the form under the map.'],
+ ['Ping the router (192.168.1.1) from PC1',()=>S.pings['PC1|192.168.1.1'],'In PC1’s prompt: ping 192.168.1.1. Try show ip interface brief on R1 if it fails.']]},
+{t:'Two networks, one router',intro:'Routers connect different subnets. Each router interface is the gateway for the LAN behind it. Build two LANs and get a PC in one to reach a PC in the other.',
+ devs:[['pc',70,340,'PC1'],['sw',200,210,'SW1'],['rt',400,210,'R1'],['sw',600,210,'SW2'],['pc',730,340,'PC2']],
+ tasks:[['Cable PC1–SW1, SW1–R1 (do this one first), R1–SW2 and SW2–PC2',()=>ln('PC1','SW1')&&ln('SW1','R1')&&ln('R1','SW2')&&ln('SW2','PC2'),'The first cable to R1 gets Gi0/0, the second gets Gi0/1. Read the port labels on the map.'],
+ ['Configure R1: Gi0/0 = 192.168.1.1 and Gi0/1 = 192.168.2.1, both /24 (255.255.255.0) and not shut down',()=>ifOk('R1','Gi0/0','192.168.1.1')&&ifOk('R1','Gi0/1','192.168.2.1'),'Run interface gi0/0 and interface gi0/1 one after the other, each with ip address and no shutdown.'],
+ ['PC1: 192.168.1.10 with gateway 192.168.1.1. PC2: 192.168.2.10 with gateway 192.168.2.1',()=>ipIs('PC1','192.168.1.10',M,'192.168.1.1')&&ipIs('PC2','192.168.2.10',M,'192.168.2.1'),'Both PCs need a gateway or they can’t leave their own subnet.'],
+ ['Ping PC2 from PC1',()=>pg('PC1','PC2'),'If it fails, check show ip interface brief on R1 and the gateway on both PCs.']]},
+{t:'Subnet masks',intro:'Hosts only talk directly when the mask puts them in the same network. These two PCs are cabled to one switch but sit in different /24 networks. Fix it with the masks alone.',
+ devs:[['pc',120,300,'PC1'],['pc',680,300,'PC2'],['sw',400,130,'SW1']],
+ pre(){const a=K('PC1'),b=K('PC2'),s=K('SW1');cable(a.id,s.id);cable(b.id,s.id);a.ip='10.0.0.10';b.ip='10.0.1.10'},
+ tasks:[['Set the mask on both PCs to 255.255.254.0 (a /23)',()=>K('PC1').mask=='255.255.254.0'&&K('PC2').mask=='255.255.254.0','A /23 covers 10.0.0.0 to 10.0.1.255, so both addresses land in one network.'],['Ping PC2 from PC1',()=>pg('PC1','PC2'),'Select PC1 and run ping 10.0.1.10.']]},
+{t:'Troubleshoot: nothing works',intro:'This network is already built, but the users can’t reach each other. Work like a NOC engineer: check interface status first, then the hosts.',
+ devs:[['pc',70,340,'PC1'],['sw',200,210,'SW1'],['rt',400,210,'R1'],['sw',600,210,'SW2'],['pc',730,340,'PC2']],
+ pre(){const id={};S.devs.forEach(d=>id[d.k]=d.id);[['PC1','SW1'],['SW1','R1'],['R1','SW2'],['SW2','PC2']].forEach(([a,b])=>cable(id[a],id[b]));const r=K('R1');r.host='R1';r.ifs['Gi0/0']={ip:'192.168.1.1',mask:M,up:1};r.ifs['Gi0/1']={ip:'192.168.2.1',mask:M,up:0};const p=K('PC1'),q=K('PC2');p.ip='192.168.1.10';p.gw='192.168.1.254';q.ip='192.168.2.10';q.gw='192.168.2.1'},
+ tasks:[['On R1 run show ip interface brief',()=>!!S.used.brief,'Select R1, type enable, then show ip interface brief.'],['Bring up the interface that is administratively down',()=>ifOk('R1','Gi0/0','192.168.1.1')&&ifOk('R1','Gi0/1','192.168.2.1'),'configure terminal, interface gi0/1, no shutdown'],['Correct PC1’s default gateway',()=>ipIs('PC1','192.168.1.10',M,'192.168.1.1'),'The gateway is the router’s address on PC1’s own network.'],['Ping PC2 from PC1',()=>pg('PC1','PC2'),'Run ping 192.168.2.10 from PC1.']]},
+{t:'Branch office build',intro:'No guide rails this time. Build to the spec: LAN A 10.10.10.0/24 on Gi0/0, LAN B 10.10.20.0/24 on Gi0/1, router named BRANCH-R1.',
+ devs:[['pc',70,340,'PC1'],['sw',200,210,'SW1'],['rt',400,210,'R1'],['sw',600,210,'SW2'],['pc',730,340,'PC2']],
+ tasks:[['Cable PC1–SW1, then SW1–R1, then R1–SW2, then SW2–PC2',()=>ln('PC1','SW1')&&ln('SW1','R1')&&ln('R1','SW2')&&ln('SW2','PC2'),'Cable SW1 to the router first so LAN A lands on Gi0/0.'],['Name the router BRANCH-R1',()=>K('R1').host=='BRANCH-R1','enable, configure terminal, hostname BRANCH-R1'],['Gi0/0 = 10.10.10.1 and Gi0/1 = 10.10.20.1, both /24 and on',()=>ifOk('R1','Gi0/0','10.10.10.1')&&ifOk('R1','Gi0/1','10.10.20.1'),'Each interface needs ip address and no shutdown.'],['PC1 10.10.10.50 gateway 10.10.10.1. PC2 10.10.20.50 gateway 10.10.20.1',()=>ipIs('PC1','10.10.10.50',M,'10.10.10.1')&&ipIs('PC2','10.10.20.50',M,'10.10.20.1'),'Use the form under the map.'],['Ping PC2 from PC1',()=>pg('PC1','PC2'),'Run ping 10.10.20.50 from PC1.']]},
+{t:'Read a live config',intro:'Engineers read before they type. This router is already configured. Use the show commands to see its state, then make a small safe change.',
+ devs:[['pc',130,210,'PC1'],['sw',400,210,'SW1'],['rt',660,210,'R1']],
+ pre(){const a=K('PC1'),s=K('SW1'),r=K('R1');cable(a.id,s.id);cable(s.id,r.id);r.host='EDGE-R1';r.ifs['Gi0/0']={ip:'192.168.1.1',mask:M,up:1};a.ip='192.168.1.10';a.gw='192.168.1.1'},
+ tasks:[['On the router run show ip interface brief',()=>!!S.used.brief,'Select the router, type enable, then the command.'],['On the router run show running-config',()=>!!S.used.run,'show running-config (or show run).'],['Rename the router CORE-R1',()=>K('R1').host=='CORE-R1','configure terminal, then hostname CORE-R1'],['Ping the router from PC1 to confirm nothing broke',()=>!!S.pings['PC1|192.168.1.1'],'Run ping 192.168.1.1 from PC1.']]},
+{t:'Static routes: two routers',intro:'A router only knows the networks attached to it. To reach a network behind another router you add a static route: ip route network mask next-hop. Routes are needed in both directions.',
+ devs:[['pc',80,210,'PC1'],['rt',280,210,'R1'],['rt',520,210,'R2'],['pc',720,210,'PC2']],
+ pre(){const id={};S.devs.forEach(d=>id[d.k]=d.id);[['PC1','R1'],['R1','R2'],['R2','PC2']].forEach(([a,b])=>cable(id[a],id[b]));K('R1').host='R1';K('R2').host='R2';const p=K('PC1'),q=K('PC2');p.ip='192.168.1.10';p.gw='192.168.1.1';q.ip='192.168.2.10';q.gw='192.168.2.1'},
+ tasks:[['R1: Gi0/0 = 192.168.1.1 and Gi0/1 = 172.16.0.1 (both /24, no shutdown)',()=>ifOk('R1','Gi0/0','192.168.1.1')&&ifOk('R1','Gi0/1','172.16.0.1'),'Select R1: enable, configure terminal, interface gi0/0, ip address, no shutdown. Repeat for gi0/1.'],['R2: Gi0/0 = 172.16.0.2 and Gi0/1 = 192.168.2.1 (both /24, no shutdown)',()=>ifOk('R2','Gi0/0','172.16.0.2')&&ifOk('R2','Gi0/1','192.168.2.1'),'Same steps on R2. Gi0/0 faces R1.'],['On R1 add a route to 192.168.2.0/24 via 172.16.0.2',()=>K('R1').routes.some(r=>r.n=='192.168.2.0'&&r.h=='172.16.0.2'),'In global config: ip route 192.168.2.0 255.255.255.0 172.16.0.2'],['On R2 add the route back to 192.168.1.0/24 via 172.16.0.1',()=>K('R2').routes.some(r=>r.n=='192.168.1.0'&&r.h=='172.16.0.1'),'In global config: ip route 192.168.1.0 255.255.255.0 172.16.0.1'],['Ping PC2 from PC1, then check show ip route on R1',()=>pg('PC1','PC2'),'Run ping 192.168.2.10 from PC1. Routes show as S in show ip route.']]},
+{t:'Three LANs, one router',intro:'One router can join many networks, one per interface. Connect three PCs, each on its own subnet, through the three ports of R1.',
+ devs:[['pc',110,90,'PC1'],['pc',110,330,'PC2'],['pc',690,210,'PC3'],['rt',400,210,'R1']],
+ tasks:[['Cable PC1, then PC2, then PC3 to R1, in that order',()=>ln('PC1','R1')&&ln('PC2','R1')&&ln('PC3','R1'),'PC1 lands on Gi0/0, PC2 on Gi0/1 and PC3 on Gi0/2. Read the port labels on the map.'],
+ ['R1: Gi0/0 = 10.1.1.1, Gi0/1 = 10.1.2.1, Gi0/2 = 10.1.3.1, all /24 and on',()=>ifOk('R1','Gi0/0','10.1.1.1')&&ifOk('R1','Gi0/1','10.1.2.1')&&ifOk('R1','Gi0/2','10.1.3.1'),'For each port: interface gi0/x, ip address, no shutdown.'],
+ ['PC1 10.1.1.10, PC2 10.1.2.10, PC3 10.1.3.10, each with the router address on its own network as gateway',()=>ipIs('PC1','10.1.1.10',M,'10.1.1.1')&&ipIs('PC2','10.1.2.10',M,'10.1.2.1')&&ipIs('PC3','10.1.3.10',M,'10.1.3.1'),'Gateways are 10.1.1.1, 10.1.2.1 and 10.1.3.1.'],
+ ['Ping PC3 from PC1 and from PC2',()=>pg('PC1','PC3')&&pg('PC2','PC3'),'Run ping 10.1.3.10 on each PC.']]},
+{t:'Three routers in a line',intro:'Traffic crossing several routers needs a route on every router, in both directions. PC1 and PC2 are cabled and addressed already. Configure R1, R2 and R3.',
+ devs:[['pc',60,210,'PC1'],['rt',230,210,'R1'],['rt',400,210,'R2'],['rt',570,210,'R3'],['pc',740,210,'PC2']],
+ pre(){wire([['PC1','R1'],['R1','R2'],['R2','R3'],['R3','PC2']]);pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','192.168.2.10','192.168.2.1')},
+ tasks:[['R1: Gi0/0 = 192.168.1.1 and Gi0/1 = 10.0.12.1 (/24, on)',()=>ifOk('R1','Gi0/0','192.168.1.1')&&ifOk('R1','Gi0/1','10.0.12.1'),'Gi0/0 faces PC1 and Gi0/1 faces R2.'],
+ ['R2: Gi0/0 = 10.0.12.2 and Gi0/1 = 10.0.23.1',()=>ifOk('R2','Gi0/0','10.0.12.2')&&ifOk('R2','Gi0/1','10.0.23.1'),'Gi0/0 faces R1 and Gi0/1 faces R3.'],
+ ['R3: Gi0/0 = 10.0.23.2 and Gi0/1 = 192.168.2.1',()=>ifOk('R3','Gi0/0','10.0.23.2')&&ifOk('R3','Gi0/1','192.168.2.1'),'Gi0/0 faces R2 and Gi0/1 faces PC2.'],
+ ['Add the static routes each router needs to reach the LAN it does not touch',()=>{const h=(r,n,x)=>K(r).routes.some(z=>z.n==n&&z.h==x);return h('R1','192.168.2.0','10.0.12.2')&&h('R2','192.168.2.0','10.0.23.2')&&h('R2','192.168.1.0','10.0.12.1')&&h('R3','192.168.1.0','10.0.23.1')},'R1: 192.168.2.0 via 10.0.12.2. R2: both LANs. R3: 192.168.1.0 via 10.0.23.1.'],
+ ['Ping PC2 from PC1',()=>pg('PC1','PC2'),'If it times out, run show ip route on each router.']]},
+{t:'Default route to the internet',intro:'A default route (0.0.0.0 0.0.0.0) sends everything unknown to one next hop. R2 plays the ISP and is already working, apart from the way back. Set up your edge router R1.',
+ devs:[['pc',70,210,'PC1'],['rt',290,210,'R1'],['rt',510,210,'R2'],['pc',730,210,'PC2']],
+ pre(){wire([['PC1','R1'],['R1','R2'],['R2','PC2']]);pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','203.0.113.10','203.0.113.1');rif('R2','Gi0/0','198.51.100.2');rif('R2','Gi0/1','203.0.113.1');K('R2').host='ISP'},
+ tasks:[['R1: Gi0/0 = 192.168.1.1 and Gi0/1 = 198.51.100.1 (/24, on)',()=>ifOk('R1','Gi0/0','192.168.1.1')&&ifOk('R1','Gi0/1','198.51.100.1'),'Gi0/1 faces the ISP.'],
+ ['On R1 add a default route via 198.51.100.2',()=>K('R1').routes.some(r=>r.n=='0.0.0.0'&&r.m=='0.0.0.0'&&r.h=='198.51.100.2'),'ip route 0.0.0.0 0.0.0.0 198.51.100.2'],
+ ['On the ISP router add the way back to 192.168.1.0/24 via 198.51.100.1',()=>K('R2').routes.some(r=>r.n=='192.168.1.0'&&r.h=='198.51.100.1'),'Select the ISP router: enable, configure terminal, ip route 192.168.1.0 255.255.255.0 198.51.100.1'],
+ ['Ping 203.0.113.10 from PC1',()=>pg('PC1','PC2'),'One default route replaces a route per network.']]},
+{t:'Two switches',intro:'Switches can be chained to stretch one network across a building. All four PCs share a subnet even though they sit on different switches.',
+ devs:[['pc',90,100,'PC1'],['pc',90,320,'PC2'],['sw',290,210,'SW1'],['sw',510,210,'SW2'],['pc',710,100,'PC3'],['pc',710,320,'PC4']],
+ tasks:[['Cable PC1 and PC2 to SW1, PC3 and PC4 to SW2, then SW1 to SW2',()=>ln('PC1','SW1')&&ln('PC2','SW1')&&ln('PC3','SW2')&&ln('PC4','SW2')&&ln('SW1','SW2'),'Five cables. The SW1 to SW2 link is the uplink.'],
+ ['Give all four PCs a different address in 10.20.0.0/24 with mask 255.255.255.0',()=>['PC1','PC2','PC3','PC4'].every(k=>K(k).mask==M&&same(K(k).ip,M,'10.20.0.0'))&&new Set(['PC1','PC2','PC3','PC4'].map(k=>K(k).ip)).size==4,'For example 10.20.0.1 to 10.20.0.4.'],
+ ['Ping PC4 from PC1',()=>pg('PC1','PC4'),'The traffic crosses both switches.']]},
+{fix:1,t:'Fault: wrong network on a PC',intro:'A user says PC1 cannot reach the router. The router is configured correctly. Find what is wrong with the PC and fix it.',
+ devs:[['pc',130,210,'PC1'],['sw',400,210,'SW1'],['rt',660,210,'R1']],
+ pre(){wire([['PC1','SW1'],['SW1','R1']]);rif('R1','Gi0/0','192.168.1.1');pcs('PC1','192.168.10.10','192.168.1.1')},
+ tasks:[['Reproduce it: ping 192.168.1.1 from PC1 and read the message',()=>ran('PC1',/ping 192\.168\.1\.1/),'Select PC1 and run ping 192.168.1.1.'],
+ ['Run ipconfig on PC1 and compare its address with the router',()=>ran('PC1',/ipconfig/i),'The PC and its gateway must be on the same network.'],
+ ['Fix the PC address (any free address in 192.168.1.0/24)',()=>same(K('PC1').ip,M,'192.168.1.0')&&K('PC1').ip!='192.168.1.1'&&K('PC1').mask==M,'Use the form under the map.'],
+ ['Ping the router successfully',()=>!!S.pings['PC1|192.168.1.1'],'Run the ping again.']]},
+{fix:1,t:'Fault: replies never come back',intro:'PC1 can send to PC3 but never gets a reply. The addresses look fine at a glance. Compare the settings carefully.',
+ devs:[['pc',120,300,'PC1'],['pc',400,330,'PC2'],['pc',680,300,'PC3'],['sw',400,130,'SW1']],
+ pre(){wire([['PC1','SW1'],['PC2','SW1'],['PC3','SW1']]);pcs('PC1','10.0.0.10');pcs('PC2','10.0.0.20');pcs('PC3','10.0.0.30','','255.255.255.252')},
+ tasks:[['Ping 10.0.0.30 from PC1 and note the message',()=>ran('PC1',/ping 10\.0\.0\.30/),'The message says the reply cannot get back.'],
+ ['Run ipconfig on PC3',()=>ran('PC3',/ipconfig/i),'Compare its mask with the other PCs.'],
+ ['Fix the fault on PC3',()=>K('PC3').mask==M,'The mask should be 255.255.255.0.'],
+ ['Ping PC3 from PC1 successfully',()=>pg('PC1','PC3'),'Run the ping again.']]},
+{fix:1,t:'Fault: the LAN that vanished',intro:'Users on the second LAN lost connectivity after a cabling job. All the configuration is correct. Find out why and restore it.',
+ devs:[['pc',70,340,'PC1'],['sw',200,210,'SW1'],['rt',400,210,'R1'],['sw',600,210,'SW2'],['pc',730,340,'PC2']],
+ pre(){wire([['PC1','SW1'],['SW1','R1'],['SW2','PC2']]);rif('R1','Gi0/0','192.168.1.1');rif('R1','Gi0/1','192.168.2.1');pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','192.168.2.10','192.168.2.1')},
+ tasks:[['On R1 run show ip interface brief and look at Gi0/1',()=>ran('R1',/show ip int/i),'Select R1: enable, then the command. What is the status?'],
+ ['Restore the missing cable',()=>ln('R1','SW2'),'Cable tool: R1 to SW2.'],
+ ['Ping PC2 from PC1',()=>pg('PC1','PC2'),'Run ping 192.168.2.10 from PC1.']]},
+{fix:1,t:'Fault: wrong next hop',intro:'PC1 cannot reach PC2 across two routers. Someone entered a static route with a typo. Find it and replace it.',
+ devs:[['pc',80,210,'PC1'],['rt',280,210,'R1'],['rt',520,210,'R2'],['pc',720,210,'PC2']],
+ pre(){wire([['PC1','R1'],['R1','R2'],['R2','PC2']]);rif('R1','Gi0/0','192.168.1.1');rif('R1','Gi0/1','172.16.0.1');rif('R2','Gi0/0','172.16.0.2');rif('R2','Gi0/1','192.168.2.1');pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','192.168.2.10','192.168.2.1');K('R1').routes=[{n:'192.168.2.0',m:M,h:'172.16.0.3'}];K('R2').routes=[{n:'192.168.1.0',m:M,h:'172.16.0.1'}]},
+ tasks:[['Ping 192.168.2.10 from PC1 and note the message',()=>ran('PC1',/ping 192\.168\.2\.10/),'It says the next hop did not answer.'],
+ ['On R1 run show ip route',()=>ran('R1',/show ip r/i),'Compare the next hop with R2’s address on the link.'],
+ ['Remove the wrong route and add the right one on R1',()=>K('R1').routes.some(r=>r.n=='192.168.2.0'&&r.h=='172.16.0.2')&&!K('R1').routes.some(r=>r.h=='172.16.0.3'),'In global config: no ip route 192.168.2.0 255.255.255.0 172.16.0.3, then ip route 192.168.2.0 255.255.255.0 172.16.0.2'],
+ ['Ping PC2 from PC1 successfully',()=>pg('PC1','PC2'),'Run the ping again.']]},
+{fix:1,t:'Fault: one-way routing',intro:'PC1 can send to PC2 but the pings fail. The path forward is fine. Work out which router is missing something.',
+ devs:[['pc',80,210,'PC1'],['rt',280,210,'R1'],['rt',520,210,'R2'],['pc',720,210,'PC2']],
+ pre(){wire([['PC1','R1'],['R1','R2'],['R2','PC2']]);rif('R1','Gi0/0','192.168.1.1');rif('R1','Gi0/1','172.16.0.1');rif('R2','Gi0/0','172.16.0.2');rif('R2','Gi0/1','192.168.2.1');pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','192.168.2.10','192.168.2.1');K('R1').routes=[{n:'192.168.2.0',m:M,h:'172.16.0.2'}]},
+ tasks:[['Ping 192.168.2.10 from PC1 and read which router complains',()=>ran('PC1',/ping 192\.168\.2\.10/),'The message names the router that has no route.'],
+ ['On that router run show ip route',()=>ran('R2',/show ip r/i)||ran('R1',/show ip r/i),'Which network is missing?'],
+ ['Add the missing route on R2 (192.168.1.0/24 via 172.16.0.1)',()=>K('R2').routes.some(r=>r.n=='192.168.1.0'&&r.h=='172.16.0.1'),'ip route 192.168.1.0 255.255.255.0 172.16.0.1'],
+ ['Ping PC2 from PC1 successfully',()=>pg('PC1','PC2'),'Routing must work in both directions.']]},
+{fix:1,t:'Fault: two problems at once',intro:'PC1 cannot reach PC2. The routing is fine, but there are two separate faults in the network. Find and fix both.',
+ devs:[['pc',80,210,'PC1'],['rt',280,210,'R1'],['rt',520,210,'R2'],['pc',720,210,'PC2']],
+ pre(){wire([['PC1','R1'],['R1','R2'],['R2','PC2']]);rif('R1','Gi0/0','192.168.1.1');rif('R1','Gi0/1','172.16.0.1');rif('R2','Gi0/0','172.16.0.2');rif('R2','Gi0/1','192.168.2.1',0);pcs('PC1','192.168.1.10','192.168.1.1');pcs('PC2','192.168.2.10','192.168.2.254');K('R1').routes=[{n:'192.168.2.0',m:M,h:'172.16.0.2'}];K('R2').routes=[{n:'192.168.1.0',m:M,h:'172.16.0.1'}]},
+ tasks:[['Ping 192.168.2.10 from PC1 and read the message',()=>ran('PC1',/ping 192\.168\.2\.10/),'Start with the symptom.'],
+ ['On R2 run show ip interface brief',()=>ran('R2',/show ip int/i),'Look at the status of each interface.'],
+ ['Bring up the shut interface on R2',()=>ifOk('R2','Gi0/1','192.168.2.1'),'configure terminal, interface gi0/1, no shutdown'],
+ ['Fix PC2’s default gateway',()=>ipIs('PC2','192.168.2.10',M,'192.168.2.1'),'The gateway is the router address on PC2’s own network.'],
+ ['Ping PC2 from PC1 successfully',()=>pg('PC1','PC2'),'Both faults must be fixed.']]},
+{t:'Sandbox',intro:'Free build. Add PCs, switches and routers with the buttons above, cable them and configure anything you like. Try breaking something on purpose and see which ping message you get.',devs:[],tasks:[]}];
+function runChecks(){const L=LS[S.L];L.tasks.forEach((t,i)=>{if(!S.latch[i]&&t[1]())S.latch[i]=1});
+ if(L.tasks.length&&L.tasks.every((_,i)=>S.latch[i])){let c=0;if(!done[S.L]){done[S.L]=1;c=1}if(S.L==todayLab()&&markLab())c=1;if(c)saveDone()}}
+function load(i){S.L=i;S.devs=[];S.links=[];S.nid=1;S.sel=null;S.cf=null;S.latch={};S.pings={};S.used={};
+ LS[i].devs.forEach(([t,x,y,k])=>mk(t,x,y,k));if(LS[i].pre)LS[i].pre();msg('');changed();panel()}
+const changed=()=>{runChecks();render();side()};
+/* rendering */
+const ICON={pc:'<rect x="-28" y="-26" width="56" height="38" rx="4" fill="var(--sv)" stroke="var(--ac)" stroke-width="2"/><path d="M-12 24h24M0 12v12" stroke="var(--ac)" stroke-width="2"/>',
+sw:'<rect x="-36" y="-13" width="72" height="26" rx="4" fill="var(--sv)" stroke="var(--ac)" stroke-width="2"/><path d="M-24 0h8M-8 0h8M8 0h8M24 0h4" stroke="var(--ok)" stroke-width="4" stroke-linecap="round"/>',
+rt:'<circle r="27" fill="var(--sv)" stroke="var(--ac)" stroke-width="2"/><path d="M-14 -5h28m-6 -6 6 6-6 6M14 7h-28m6 -6-6 6 6 6" fill="none" stroke="var(--ac)" stroke-width="2" stroke-linecap="round"/>'};
+function render(){let h='';
+ S.links.forEach((l,i)=>{const A=dev(l.a),B=dev(l.b),dn=[[A,l.ap],[B,l.bp]].some(([d,p])=>d.type=='rt'&&!d.ifs[p].up);
+  h+=`<g data-l="${i}" style="cursor:pointer"><line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="${dn?'var(--wn)':'var(--ok)'}" stroke-width="3"/><line x1="${A.x}" y1="${A.y}" x2="${B.x}" y2="${B.y}" stroke="transparent" stroke-width="16"/></g>`;
+  [[A,B,l.ap],[B,A,l.bp]].forEach(([p,q,t])=>{h+=`<text class="pl" x="${p.x+(q.x-p.x)*.3}" y="${p.y+(q.y-p.y)*.3-6}" font-size="10" text-anchor="middle">${t}</text>`})});
+ S.devs.forEach(d=>{const sel=S.sel==d.id,cf=S.cf==d.id;
+  h+=`<g data-d="${d.id}" transform="translate(${d.x},${d.y})" style="cursor:pointer"><rect x="-44" y="-38" width="88" height="104" fill="transparent"/>`;
+  if(sel||cf)h+=`<rect x="-44" y="-38" width="88" height="76" rx="10" fill="none" stroke="${cf?'var(--wn)':'var(--ac)'}" stroke-dasharray="5 4" stroke-width="2"/>`;
+  h+=ICON[d.type]+`<text y="54" text-anchor="middle" font-size="13" font-weight="600">${esc(nm(d))}</text>`;
+  if(d.type=='pc'&&d.ip)h+=`<text class="mu" y="68" text-anchor="middle" font-size="11">${esc(d.ip)}</text>`;
+  if(d.type=='rt'){let y=68;for(const p in d.ifs)if(d.ifs[p].ip){h+=`<text class="mu" y="${y}" text-anchor="middle" font-size="10">${p} ${esc(d.ifs[p].ip)}${d.ifs[p].up?'':' (shut)'}</text>`;y+=12}}
+  h+='</g>'});
+ $('#map').innerHTML=h;
+ document.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t==S.tool))}
+function side(){const L=LS[S.L];
+ let h='<h3>Build labs</h3><div class="ls">'+lst(l=>!l.fix&&l.t!='Sandbox')+'</div><h3>Fault finding</h3><div class="ls">'+lst(l=>l.fix)+'</div><div class="ls" style="margin-top:8px">'+lst(l=>l.t=='Sandbox')+`</div><h3>${esc(L.t)}</h3><p>${L.intro}</p>`;
+ if(L.tasks.length){h+='<ol class="tk">'+L.tasks.map((t,i)=>`<li class="${S.latch[i]?'ok':''}"><span>${t[0]}</span><details><summary>Hint</summary>${t[2]}</details></li>`).join('')+'</ol>';
+  if(L.tasks.every((_,i)=>S.latch[i]))h+='<p class="win">Lesson complete. '+(S.L<LS.length-1?`<button data-ls="${S.L+1}">Next lesson</button>`:'')+'</p>'}
+ $('#side').innerHTML=h}
+function panel(){const d=dev(S.sel),p=$('#panel');
+ if(!d){p.innerHTML='<p class="mu">Select a device to configure it. PCs have an address form and a command prompt. Routers and switches have a Cisco-style CLI: start with <b>enable</b>, then <b>configure terminal</b>. Type ? for options.</p>';return}
+ let h=`<h3>${esc(nm(d))} <small class="mu">${{pc:'PC',sw:'Switch',rt:'Router'}[d.type]}</small></h3>`;
+ if(d.type=='pc')h+=`<div class="frm"><label>IP address<input id="fip" value="${esc(d.ip)}" placeholder="192.168.1.10" inputmode="decimal"></label><label>Subnet mask<input id="fmk" value="${esc(d.mask)}"></label><label>Default gateway<input id="fgw" value="${esc(d.gw)}" placeholder="optional"></label><button id="fap">Apply</button></div>`;
+ p.innerHTML=h+`<pre class="term" id="term">${esc(d.log.join('\n'))}</pre><div class="in"><span id="pr">${esc(prompt(d))}</span><input id="ci" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Command line"></div>`;
+ const t=$('#term');t.scrollTop=t.scrollHeight}
+/* events */
+const svg=$('#map');
+const pt=e=>{const p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())};
+svg.addEventListener('pointerdown',e=>{const g=e.target.closest('[data-d]'),l=e.target.closest('[data-l]');
+ if(S.tool=='del'){if(g){const id=+g.dataset.d;S.devs=S.devs.filter(d=>d.id!=id);S.links=S.links.filter(k=>k.a!=id&&k.b!=id);if(S.sel==id){S.sel=null;panel()}changed()}else if(l){S.links.splice(+l.dataset.l,1);changed()}return}
+ if(!g){if(S.tool=='sel'){S.sel=null;panel();render()}return}
+ const id=+g.dataset.d;
+ if(S.tool=='cable'){if(S.cf==null){S.cf=id;msg('Now click the second device.');render()}else{const f=S.cf;S.cf=null;cable(f,id)}return}
+ S.sel=id;panel();const d=dev(id),q=pt(e);drag={id,dx:d.x-q.x,dy:d.y-q.y};svg.setPointerCapture(e.pointerId);render()});
+svg.addEventListener('pointermove',e=>{if(!drag)return;const d=dev(drag.id),q=pt(e);d.x=Math.max(45,Math.min(755,q.x+drag.dx));d.y=Math.max(45,Math.min(345,q.y+drag.dy));render()});
+svg.addEventListener('pointerup',()=>{drag=null});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.t){S.tool=b.dataset.t;S.cf=null;msg(S.tool=='cable'?'Click the first device, then the second.':S.tool=='del'?'Click a device or a cable to remove it.':'');render()}
+ else if(b.dataset.add){const n=S.devs.length;const d=mk(b.dataset.add,110+(n*173)%580,90+(n*89)%230);S.sel=d.id;panel();changed()}
+ else if(b.dataset.ls!==undefined)load(+b.dataset.ls);
+ else if(b.id=='rs')load(S.L);
+ else if(b.id=='fap'){const d=dev(S.sel),ip=$('#fip').value.trim(),mk2=$('#fmk').value.trim(),gw=$('#fgw').value.trim();
+  if(ip&&ip2n(ip)==null)return msg('That IP address isn’t valid. Use four numbers 0–255 separated by dots.');
+  if(!validMask(mk2))return msg('That subnet mask isn’t valid. Try 255.255.255.0.');
+  if(gw&&ip2n(gw)==null)return msg('That gateway address isn’t valid.');
+  d.ip=ip;d.mask=mk2;d.gw=gw;msg('Applied to '+d.k+'.');changed()}});
+document.addEventListener('keydown',e=>{if(e.key!='Enter'||e.target.id!='ci')return;
+ const d=dev(S.sel),v=e.target.value;e.target.value='';d.log.push(prompt(d)+' '+v);
+ (d.type=='pc'?pcCli(d,v):ios(d,v)).forEach(o=>d.log.push(o));
+ const t=$('#term');t.textContent=d.log.join('\n');t.scrollTop=t.scrollHeight;$('#pr').textContent=prompt(d);render()});
+/* ---- users, progress, quiz, daily tasks, team ---- */
+const TOP=['Networking basics','IP and subnetting','Cisco IOS','VLANs, DHCP and routing'];
+const QB=[[0,'Which OSI layer do switches mainly work at?',['Physical','Data link','Network','Transport'],1,'Switches forward frames by MAC address, which is Layer 2.'],
+[0,'Which device moves traffic between different IP networks?',['Hub','Switch','Router','Repeater'],2,'Routers forward packets between networks using IP addresses.'],
+[0,'Which protocol maps an IP address to a MAC address on a LAN?',['DNS','ARP','DHCP','ICMP'],1,'ARP asks who has this IP and learns the MAC from the reply.'],
+[0,'Which protocol does ping use?',['TCP','UDP','ICMP','ARP'],2,'Ping sends ICMP echo requests and waits for echo replies.'],
+[0,'Which port does HTTPS use by default?',['80','22','443','53'],2,'HTTPS uses TCP 443. 80 is HTTP, 22 is SSH and 53 is DNS.'],
+[0,'What is a default gateway?',['The DNS server','The router a host uses to reach other networks','The switch port it is plugged into','The host’s MAC address'],1,'Traffic for any address outside the local subnet goes to the gateway.'],
+[0,'Which describes TCP?',['Connectionless, no acknowledgements','Connection-oriented with acknowledgements','Used only for DNS','Works at Layer 2'],1,'TCP sets up a session and retransmits lost data. UDP does neither.'],
+[0,'What does DHCP do?',['Translates names to IPs','Hands out IP settings automatically','Encrypts traffic','Blocks unwanted traffic'],1,'DHCP leases an address, mask, gateway and DNS server to clients.'],
+[1,'How many usable host addresses are in a /24?',['256','254','255','252'],1,'256 addresses minus the network and broadcast addresses leaves 254.'],
+[1,'Which mask is /26?',['255.255.255.128','255.255.255.192','255.255.255.224','255.255.255.0'],1,'26 bits set means the last octet is 11000000, which is 192.'],
+[1,'Which is a private IPv4 address?',['172.32.0.1','172.16.5.4','192.169.1.1','11.0.0.1'],1,'Private ranges are 10/8, 172.16/12 (172.16 to 172.31) and 192.168/16.'],
+[1,'Which network is 192.168.1.130/25 in?',['192.168.1.0','192.168.1.128','192.168.1.129','192.168.1.192'],1,'A /25 splits the last octet at 128, so .130 is in 192.168.1.128/25.'],
+[1,'Two PCs on one switch have 10.0.0.10/24 and 10.0.1.10/24 and there is no router. Can they ping?',['Yes, switches route','No, different subnets need a router','Yes, if cabled directly','Only with DHCP'],1,'They are in different networks, so traffic needs a gateway.'],
+[1,'What is the broadcast address of 192.168.10.0/24?',['192.168.10.1','192.168.10.254','192.168.10.255','192.168.255.255'],2,'Broadcast is the last address in the subnet, with all host bits set to 1.'],
+[2,'Which command enters privileged EXEC mode?',['configure terminal','enable','login','privilege'],1,'enable takes you from Router> to Router#.'],
+[2,'Which prompt means global configuration mode?',['Router>','Router#','Router(config)#','Router(config-if)#'],2,'(config)# is global config. (config-if)# is interface config.'],
+[2,'Which command turns an interface on?',['up','enable','no shutdown','ip up'],2,'Cisco interfaces start shut down. no shutdown brings them up.'],
+[2,'Which command shows each interface’s IP and status in a short table?',['show ip interface brief','show interfaces all','show version','show startup-config'],0,'It is the first command to run when troubleshooting.'],
+[2,'How do you save the running config so it survives a reboot?',['write erase','copy running-config startup-config','save config','reload'],1,'It copies the config from RAM to NVRAM. write memory does the same.'],
+[2,'An interface shows administratively down. What is the cause?',['The cable is unplugged','Someone ran shutdown on it','The far end is off','Wrong IP address'],1,'Administratively down means shutdown is configured. Run no shutdown.'],
+[2,'Status up but protocol down usually points to…',['A Layer 2 problem','A routing loop','A DNS failure','A wrong hostname'],0,'The physical link is fine but Layer 2 (encapsulation, keepalives) is not.'],
+[2,'Which command shows the configuration currently running in RAM?',['show running-config','show flash','show history','show clock'],0,'show running-config displays the active configuration.']];
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const today=()=>new Date().toISOString().slice(0,10),dayN=()=>Math.floor(Date.now()/864e5);
+function todayLab(){return dayN()%(LS.length-1)}
+let DB=null,ID=null,ADM=false,P={qt:{},days:{}},Q=null;
+try{Object.assign(P,JSON.parse(localStorage.getItem('netlab-p')||'{}'))}catch(e){}
+window.markLab=()=>{const d=P.days[today()]=P.days[today()]||{};if(d.lab)return false;d.lab=1;return true};
+window.syncP=()=>{try{localStorage.setItem('netlab-p',JSON.stringify(P))}catch(e){}
+ if(DB&&ID)DB.doc('progress/'+ID).set({done,qt:P.qt,days:P.days,t:Date.now()}).catch(()=>{$('#who').textContent='Could not save to the team database.'})};
+function view(v){Q=null;['vh','labs','vq','vd','vt','vr'].forEach(x=>$('#'+x).hidden=x!=v);document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v==v));({vh:home,vr:ref,vq:qHome,vd:daily,vt:team}[v]||(()=>0))()}
+function qHome(){const t=TOP.map((n,k)=>{const s=P.qt[k];return`<tr><td>${n}</td><td>${s?s[0]+' of '+s[1]+' correct so far':'not attempted'}</td></tr>`}).join('');
+ $('#vq').innerHTML='<h2>Quiz</h2><p>Five questions at a time. You see the explanation after every answer.</p>'+['All topics',...TOP].map((n,i)=>`<button data-qt="${i}">${n}</button> `).join('')+'<h3>Your results</h3><table>'+t+'</table>'}
+function qStart(list,tag){Q={list,i:0,r:0,tag,ans:null,ord:shuf([0,1,2,3])};qShow()}
+function qShow(){const el=$(Q.tag=='daily'?'#vd':'#vq'),q=QB[Q.list[Q.i]];
+ if(!q){const dly=Q.tag=='daily',n=Q.list.length,r=Q.r;if(dly)(P.days[today()]=P.days[today()]||{}).quiz=r;syncP();Q=null;el.innerHTML=`<h2>Finished</h2><p>You scored ${r} out of ${n}.</p><button data-v="${dly?'vd':'vq'}">Back</button>`;return}
+ el.innerHTML=`<h2>Question ${Q.i+1} of ${Q.list.length}</h2><p class="mu">${TOP[q[0]]}</p><p><b>${esc(q[1])}</b></p>`+Q.ord.map(k=>`<button class="opt${Q.ans!=null?(k==q[3]?' good':k==Q.ans?' badc':''):''}" data-a="${k}" ${Q.ans!=null?'disabled':''}>${esc(q[2][k])}</button>`).join('')+(Q.ans!=null?`<div class="bx">${Q.ans==q[3]?'Correct. ':'Not quite. '}${esc(q[4])}</div><button class="on" data-nx="1">${Q.i+1<Q.list.length?'Next question':'See score'}</button>`:'')}
+async function daily(){const el=$('#vd'),d=P.days[today()]||{},lab=LS[todayLab()];let note='';
+ try{if(DB){const s=await DB.doc('daily/'+today()).get();if(s.exists)note=s.data().note||''}}catch(e){}
+ if(Q)return;
+ el.innerHTML=`<h2>Today’s tasks</h2><p class="mu">${today()}</p>`+(note?`<div class="bx"><b>From your team lead:</b> ${esc(note)}</div>`:'')+`<ol class="tk"><li class="${d.quiz!=null?'ok':''}"><b>Daily quiz</b>, five questions. ${d.quiz!=null?'Scored '+d.quiz+' of 5. ':''}<button data-dq="1">${d.quiz!=null?'Retake':'Start'}</button></li><li class="${d.lab?'ok':''}"><b>Lab: ${esc(lab.t)}</b>. Complete every checklist item. <button data-lab="${todayLab()}">Open lab</button></li></ol>`+(ADM&&DB?`<h3>Message for today’s team</h3><input id="nt" style="width:100%" value="${esc(note)}" placeholder="For example: practise this before Friday’s router change"><p><button data-note="1">Save message</button></p>`:'')}
+async function team(){const el=$('#vt');el.textContent='Loading…';
+ try{const s=await DB.collection('progress').get(),u=await claude.use('user'),pr=await u.profiles(s.docs.map(x=>x.id));
+  if(!s.docs.length){el.innerHTML='<h2>Team progress</h2><p>Nobody has saved progress yet. Apprentices need Contributor access to the page so their progress can be saved.</p>';return}
+  el.innerHTML='<h2>Team progress</h2><table><tr><th>Name</th><th>Labs finished</th><th>Quiz accuracy</th><th>Today</th></tr>'+s.docs.map(x=>{const v=x.data(),n=Object.keys(v.done||{}).length,q=Object.values(v.qt||{}).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]),t=(v.days||{})[today()]||{};
+  return`<tr><td>${esc((pr[x.id]&&pr[x.id].name)||'Apprentice')}</td><td>${n} of ${LS.length-1}</td><td>${q[1]?Math.round(100*q[0]/q[1])+'% of '+q[1]+' answered':'none yet'}</td><td>quiz ${t.quiz!=null?t.quiz+'/5':'not done'}, lab ${t.lab?'done':'not done'}, team tasks ${Object.keys(t.cu||{}).length} ticked</td></tr>`}).join('')+'</table>'}
+ catch(e){el.textContent='Could not load team progress.'}}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.v)view(d.v);
+ else if(d.qt!==undefined){const i=+d.qt;qStart(shuf(QB.map((q,k)=>k).filter(k=>i==0||QB[k][0]==i-1)).slice(0,5),'quiz')}
+ else if(d.dq)view('vd'),qStart([0,1,2,3,4].map(i=>(dayN()*5+i*7)%QB.length),'daily');
+ else if(d.a!==undefined&&Q&&Q.ans==null){const q=QB[Q.list[Q.i]],t=P.qt[q[0]]=P.qt[q[0]]||[0,0];Q.ans=+d.a;t[1]++;if(Q.ans==q[3]){Q.r++;t[0]++}qShow()}
+ else if(d.ct!==undefined){const dy=P.days[today()]=P.days[today()]||{},c=dy.cu=dy.cu||{};if(c[d.ct])delete c[d.ct];else c[d.ct]=1;syncP();daily()}
+ else if(d.nx&&Q){Q.i++;Q.ans=null;Q.ord=shuf([0,1,2,3]);qShow()}
+ else if(d.lab!==undefined){view('labs');load(+d.lab)}
+ else if(d.note){DB.doc('daily/'+today()).set({note:$('#nt').value.trim(),tasks:$('#tl').value.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,10)}).then(()=>{b.textContent='Saved'}).catch(()=>{b.textContent='Could not save'})}});
+
+/* ---- v3: home, cheat sheet, routing, team tasks, more questions ---- */
+QB.push([3,'What does a VLAN do?',['Encrypts a link','Splits one switch into separate broadcast domains','Increases port speed','Routes between sites'],1,'Each VLAN is its own Layer 2 network, so broadcasts stay inside it.'],
+[3,'Which command puts an access port into VLAN 10?',['switchport access vlan 10','vlan 10 port','switchport trunk vlan 10','set vlan 10'],0,'Use switchport mode access, then switchport access vlan 10.'],
+[3,'What does a trunk port carry?',['One VLAN only','Several VLANs, tagged with 802.1Q','Only management traffic','Only routing updates'],1,'The 802.1Q tag lets one link carry many VLANs.'],
+[3,'Hosts in VLAN 10 and VLAN 20 must communicate. What is needed?',['A hub','A Layer 3 device such as a router','A bigger switch','Nothing'],1,'Different VLANs are different subnets, so traffic must be routed.'],
+[3,'What is the DHCP message order?',['Offer, Discover, Request, Ack','Discover, Offer, Request, Acknowledge','Request, Offer, Ack, Discover','Discover, Request, Offer, Ack'],1,'Remember DORA: Discover, Offer, Request, Acknowledge.'],
+[3,'A PC shows 169.254.x.x. What happened?',['It has a static IP','DHCP failed and it gave itself an APIPA address','It has a duplicate IP','The gateway is down'],1,'Windows falls back to 169.254.0.0/16 when no DHCP server answers.'],
+[3,'What does a static route do?',['Learns routes automatically','Gives a router a fixed next hop for a network','Blocks a network','Assigns IP addresses'],1,'An admin enters it by hand.'],
+[3,'Which command adds a static route to 192.168.2.0/24 via 10.0.0.2?',['route add 192.168.2.0 10.0.0.2','ip route 192.168.2.0 255.255.255.0 10.0.0.2','static 192.168.2.0 via 10.0.0.2','network 192.168.2.0 10.0.0.2'],1,'Syntax: ip route network mask next-hop, in global config.'],
+[3,'In show ip route, what does the code C mean?',['Cached','Connected','Configured','Cisco'],1,'C is a directly connected network on an up interface with an IP.'],
+[3,'Two routes overlap. Which does the router use?',['The oldest','The longest prefix match','The lowest next hop','A random one'],1,'The most specific route, with the longest mask, wins.'],
+[3,'Which is a link-state routing protocol?',['RIP','OSPF','ARP','STP'],1,'OSPF floods link-state data and runs SPF. RIP is distance-vector.'],
+[3,'What does STP prevent?',['Duplicate IPs','Layer 2 switching loops','DNS poisoning','Port flapping'],1,'Spanning Tree blocks redundant paths so broadcasts cannot loop forever.'],
+[3,'What does NAT mainly do?',['Encrypts traffic','Translates private addresses to public ones','Assigns VLANs','Blocks viruses'],1,'NAT lets many private hosts share public addresses.'],
+[3,'Which tool lists the path packets take, hop by hop?',['ping','traceroute','nslookup','arp'],1,'traceroute (tracert on Windows) shows each router on the way.'],
+[0,'A user can ping an IP address but not a website name. Likely fault?',['DNS','Duplicate MAC','Wrong mask','Bad cable'],0,'Name resolution is DNS. IP connectivity itself works.'],
+[0,'Which Windows command shows IP, mask and gateway?',['ipconfig','ifstat','netview','show ip'],0,'ipconfig shows them. ipconfig /all adds MAC, DHCP and DNS.'],
+[2,'Which command shows a Cisco router’s routing table?',['show ip route','show routes','show ip table','show forwarding'],0,'It lists connected (C) and static (S) routes and more.'],
+[1,'How many bits are in an IPv4 address?',['16','32','48','128'],1,'IPv4 is 32 bits in four octets. IPv6 is 128 bits.']);
+const cidr=m=>ip2n(m).toString(2).split('1').length-1;
+const netStr=(i,m)=>{const n=(ip2n(i)&ip2n(m))>>>0;return[24,16,8,0].map(s=>(n>>>s)&255).join('.')+'/'+cidr(m)};
+function showRoute(d){const o=['Codes: C - connected, S - static','Gateway of last resort is not set'];
+ Object.keys(d.ifs).forEach(k=>{const f=d.ifs[k];if(f.up&&f.ip&&linked(d,k))o.push('C    '+netStr(f.ip,f.mask)+' is directly connected, '+k)});
+ (d.routes||[]).forEach(r=>o.push('S    '+r.n+'/'+cidr(r.m)+' [1/0] via '+r.h));return o}
+function fwd(h,dst){const r0=l2(h.id,null);
+ if(same(h.ip,h.mask,dst)){const t=hit(r0,dst);return t?{ok:1,t:t.d,hops:0}:{ok:0,m:'Request timed out. No cable path to '+dst+', or that device is not configured or not up.'}}
+ if(!h.gw)return{ok:0,m:'No default gateway is set and '+dst+' is on another network.'};
+ if(!same(h.ip,h.mask,h.gw))return{ok:0,m:'The default gateway is not on this host’s own subnet.'};
+ const g=hit(r0,h.gw);if(!g||g.d.type!='rt')return{ok:0,m:'Request timed out. The gateway '+h.gw+' can’t be reached (cabling, IP or no shutdown?).'};
+ let R=g.d;
+ for(let hops=0;hops<8;hops++){
+  if(Object.values(R.ifs).some(f=>f.up&&f.ip==dst))return{ok:1,t:R,self:1,hops};
+  const out=outIf(R,dst);
+  if(out){const t=hit(l2(R.id,out),dst);return t?{ok:1,t:t.d,hops}:{ok:0,m:'Request timed out. '+nm(R)+' sent it out '+out+' but nothing answered.'}}
+  const rt=(R.routes||[]).filter(r=>same(dst,r.m,r.n)).sort((a,b)=>ip2n(b.m)-ip2n(a.m))[0];
+  if(!rt)return{ok:0,m:'Reply from '+h.gw+': Destination host unreachable. '+nm(R)+' has no route to '+dst+'.'};
+  const o2=outIf(R,rt.h);if(!o2)return{ok:0,m:nm(R)+' can’t reach its next hop '+rt.h+'.'};
+  const nx=hit(l2(R.id,o2),rt.h);if(!nx||nx.d.type!='rt')return{ok:0,m:'Request timed out. Next hop '+rt.h+' did not answer.'};
+  R=nx.d}
+ return{ok:0,m:'Routing loop: TTL expired in transit.'}}
+function ping(s,dst){const ok=h=>({ok:1,m:'Reply from '+dst+': bytes=32 time<1ms TTL='+(128-h)}),no=m=>({ok:0,m});
+ if(!s.ip)return no('Set an IP address on this PC first.');
+ if(ip2n(dst)==null)return no('Invalid IP address.');
+ if(dst==s.ip)return ok(0);
+ const f=fwd(s,dst);if(!f.ok)return no(f.m);
+ if(f.t.type=='pc'){const b=fwd(f.t,s.ip);if(!b.ok)return no('Request timed out. The reply from '+dst+' can’t get back. '+b.m)}
+ return ok(f.hops||0)}
+async function dayInfo(){let note='',tasks=[];try{if(DB){const s=await DB.doc('daily/'+today()).get();if(s.exists){const x=s.data();note=x.note||'';tasks=x.tasks||[]}}}catch(e){}return{note,tasks}}
+async function home(){const i=await dayInfo(),d=P.days[today()]||{},cu=d.cu||{},tk=i.tasks.length,td=i.tasks.filter((_,k)=>cu[k]).length,
+ st=[['Daily quiz',d.quiz!=null,d.quiz!=null?d.quiz+' of 5':'not started'],['Lab: '+LS[todayLab()].t,!!d.lab,d.lab?'complete':'not finished']].concat(tk?[['Team tasks',td==tk,td+' of '+tk+' ticked']]:[]),
+ n=st.filter(s=>s[1]).length,c=Object.keys(done).filter(k=>+k<LS.length-1).length,q=Object.values(P.qt).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]);
+ $('#vh').innerHTML=`<h2>Today</h2><p class='mu'>${today()}. ${n} of ${st.length} daily items done.</p><progress value='${n}' max='${st.length}'></progress>`+(i.note?`<div class='bx'><b>From your team lead:</b> ${esc(i.note)}</div>`:'')+`<ol class='tk'>`+st.map(s=>`<li class='${s[1]?'ok':''}'>${esc(s[0])}: ${s[2]}</li>`).join('')+`</ol><div class='grid'><button data-dq='1'>Start daily quiz</button><button data-lab='${todayLab()}'>Open today’s lab</button><button data-v='vd'>All daily tasks</button><button data-v='vq'>Practice quiz</button><button data-v='labs'>Labs</button><button data-v='vr'>Cheat sheet</button></div><h3>Overall</h3><table><tr><td>Labs finished</td><td>${c} of ${LS.length-1}</td></tr><tr><td>Quiz accuracy</td><td>${q[1]?Math.round(100*q[0]/q[1])+'% over '+q[1]+' answers':'no answers yet'}</td></tr></table>`}
+async function daily(){const el=$('#vd'),d=P.days[today()]||{},lab=LS[todayLab()],i=await dayInfo(),cu=d.cu||{};if(Q)return;
+ el.innerHTML=`<h2>Today’s tasks</h2><p class='mu'>${today()}</p>`+(i.note?`<div class='bx'><b>From your team lead:</b> ${esc(i.note)}</div>`:'')+`<ol class='tk'><li class='${d.quiz!=null?'ok':''}'><b>Daily quiz</b>, five questions. ${d.quiz!=null?'Scored '+d.quiz+' of 5. ':''}<button data-dq='1'>${d.quiz!=null?'Retake':'Start'}</button></li><li class='${d.lab?'ok':''}'><b>Lab: ${esc(lab.t)}</b>. Complete every checklist item. <button data-lab='${todayLab()}'>Open lab</button></li>`+i.tasks.map((t,k)=>`<li class='${cu[k]?'ok':''}'><b>Team task</b>: ${esc(t)} <button data-ct='${k}'>${cu[k]?'Undo':'Mark done'}</button></li>`).join('')+'</ol>'+(ADM&&DB?`<h3>Set today’s team tasks</h3><p class='mu'>One task per line. Apprentices tick them off and you see the count on the Team tab.</p><textarea id='tl' rows='4' style='width:100%;font:inherit;font-size:16px'>${esc(i.tasks.join('\n'))}</textarea><p><input id='nt' style='width:100%' value='${esc(i.note)}' placeholder='Optional message for the team'></p><p><button data-note='1'>Save tasks and message</button></p>`:'')}
+const TB=r=>'<table>'+r.map(x=>'<tr>'+x.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</table>';
+const REF=[['IOS modes and prompts',TB([['Router&gt;','User EXEC. Type enable to go up.'],['Router#','Privileged EXEC. All show commands. configure terminal enters config.'],['Router(config)#','Global config: hostname, ip route, interface.'],['Router(config-if)#','Interface config: ip address, no shutdown.'],['exit / end','exit goes up one level, end jumps to #. Tab completes, ? lists options.']])],
+['Commands for every day',TB([['show ip interface brief','Interface IPs and status. Run this first.'],['show running-config','Active config in RAM'],['show startup-config','Saved config in NVRAM'],['show ip route','Routing table: C connected, S static, O OSPF'],['show interfaces','Errors, speed, duplex, counters'],['show vlan brief','VLANs and their ports'],['show mac address-table','Which MAC is on which switch port'],['show cdp neighbors','Directly connected Cisco devices'],['show version','IOS version, model, uptime'],['copy running-config startup-config','Save your work'],['ping / traceroute','Test reachability, see each hop']])],
+['Config examples',`<pre>enable
+configure terminal
+hostname R1
+interface gi0/0
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+exit
+ip route 192.168.2.0 255.255.255.0 172.16.0.2
+end
+copy running-config startup-config</pre><p>VLAN on a switch (real IOS, not simulated here):</p><pre>vlan 10
+ name SALES
+interface fa0/1
+ switchport mode access
+ switchport access vlan 10
+interface gi0/1
+ switchport mode trunk</pre><p>DHCP on a router (real IOS, not simulated here):</p><pre>ip dhcp excluded-address 192.168.1.1 192.168.1.20
+ip dhcp pool LAN1
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+ dns-server 8.8.8.8</pre>`],
+['Subnetting',TB([['/24','255.255.255.0','254 hosts','block 256'],['/25','255.255.255.128','126 hosts','block 128'],['/26','255.255.255.192','62 hosts','block 64'],['/27','255.255.255.224','30 hosts','block 32'],['/28','255.255.255.240','14 hosts','block 16'],['/29','255.255.255.248','6 hosts','block 8'],['/30','255.255.255.252','2 hosts','block 4']])+'<p>Usable hosts = 2^host bits minus 2. Private: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16. APIPA 169.254.0.0/16. Loopback 127.0.0.1.</p>'],
+['OSI model',TB([['7 Application','HTTP, DNS, DHCP'],['6 Presentation','Encryption, formats'],['5 Session','Session setup and teardown'],['4 Transport','TCP and UDP, ports. Segments'],['3 Network','IP, routers. Packets'],['2 Data link','MAC, switches, VLANs. Frames'],['1 Physical','Cables, hubs, signals. Bits']])],
+['Common ports','<p>20/21 FTP, 22 SSH, 23 Telnet, 25 SMTP, 53 DNS, 67/68 DHCP, 69 TFTP, 80 HTTP, 110 POP3, 123 NTP, 143 IMAP, 161/162 SNMP, 443 HTTPS, 514 syslog, 3389 RDP.</p>'],
+['Troubleshooting order','<p>Work bottom-up: 1) cable and link lights, 2) show ip interface brief shows up/up, 3) ipconfig: IP, mask and gateway correct, 4) ping the gateway, 5) ping a remote IP, 6) ping a name (DNS), 7) show ip route and any ACLs.</p>'+TB([['administratively down','Someone ran shutdown. Use no shutdown.'],['up / down','Layer 2 problem: encapsulation, keepalives, far end.'],['down / down','No cable, far end off, or a bad cable.'],['169.254.x.x','DHCP failed.'],['Ping IP works, name fails','DNS.'],['Local works, remote fails','Gateway or routing: check the gateway and show ip route.'],['Intermittent loss','Duplicate IP, bad cable or a duplex mismatch.']])],
+['Routing, switching and cables',TB([['Connected','admin distance 0'],['Static','1'],['EIGRP','90'],['OSPF','110'],['RIP','120']])+'<p>Lowest admin distance wins, then longest prefix match. Cables: straight-through for unlike devices (PC to switch, switch to router), crossover for like devices, rollover for the console port. DHCP is DORA: Discover, Offer, Request, Acknowledge. STP blocks Layer 2 loops. A trunk carries many VLANs with 802.1Q tags; different VLANs need a router to talk.</p>']];
+function ref(){const el=$('#vr');if(el.dataset.b)return;el.dataset.b=1;el.innerHTML=`<h2>Cheat sheet</h2><input id='rq' placeholder='Search: vlan, ospf, subnet, 169.254' style='width:100%;margin-bottom:8px'>`+REF.map(r=>`<details class='rf' open><summary><b>${r[0]}</b></summary>${r[1]}</details>`).join('')}
+document.addEventListener('input',e=>{if(e.target.id!='rq')return;const v=e.target.value.toLowerCase();document.querySelectorAll('.rf').forEach(x=>{x.hidden=!x.textContent.toLowerCase().includes(v)})});
+/* ---- v4: dashboard and theme ---- */
+const thNow=()=>document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+const thSet=t=>{if(t)document.documentElement.dataset.theme=t;$('#th').textContent=thNow()=='dark'?'Light mode':'Dark mode'};
+try{thSet(localStorage.getItem('netlab-theme'))}catch(e){thSet()}
+document.addEventListener('click',e=>{if(e.target.id!='th')return;const t=thNow()=='dark'?'light':'dark';thSet(t);try{localStorage.setItem('netlab-theme',t)}catch(x){}});
+async function home(){const i=await dayInfo(),d=P.days[today()]||{},cu=d.cu||{},tk=i.tasks.length,td=i.tasks.filter((_,k)=>cu[k]).length,N=LS.length-1,
+ st=[['Daily quiz',d.quiz!=null,d.quiz!=null?d.quiz+' of 5':'not started'],['Lab: '+LS[todayLab()].t,!!d.lab,d.lab?'complete':'not finished']].concat(tk?[['Team tasks',td==tk,td+' of '+tk+' ticked']]:[]),
+ n=st.filter(s=>s[1]).length,c=Object.keys(done).filter(k=>+k<N).length,q=Object.values(P.qt).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]),
+ ds=k=>{const x=new Date(Date.now()-k*864e5).toISOString().slice(0,10);return[x,P.days[x]||{}]},fin=x=>x.quiz!=null&&x.lab,
+ tile=(v,t,s)=>`<button class='tile' data-v='${v}'><b>${t}</b><span>${s}</span></button>`;
+ let sk=0;for(let k=fin(ds(0)[1])?0:1;k<90&&fin(ds(k)[1]);k++)sk++;
+ $('#vh').innerHTML=`<h2>SNOC NetLab</h2><p class='mu'>${today()}</p><div class='stats'><div class='stat'><b>${n} of ${st.length}</b><span>done today</span></div><div class='stat'><b>${c} of ${N}</b><span>labs finished</span></div><div class='stat'><b>${q[1]?Math.round(100*q[0]/q[1])+'%':'–'}</b><span>quiz accuracy${q[1]?' ('+q[1]+' answered)':''}</span></div><div class='stat'><b>${sk}</b><span>day streak</span></div></div><h3>Today</h3><progress value='${n}' max='${st.length}'></progress>`+(i.note?`<div class='bx'><b>From your team lead:</b> ${esc(i.note)}</div>`:'')+`<ol class='tk'>`+st.map(s=>`<li class='${s[1]?'ok':''}'>${esc(s[0])}: ${s[2]}</li>`).join('')+`</ol><p><button class='on' data-dq='1'>Start daily quiz</button> <button data-lab='${todayLab()}'>Open today’s lab</button></p><h3>Go to</h3><div class='tiles'>`+tile('labs','Labs',c+' of '+N+' finished')+tile('vq','Quiz',q[1]?q[1]+' answered so far':'Practise by topic')+tile('vd','Daily tasks',n+' of '+st.length+' done today')+tile('vr','Cheat sheet','CCNA and network help')+(ADM&&DB?tile('vt','Admin','Monitor apprentices'):'')+`</div><h3>Last 7 days</h3><div class='wk'>`+[6,5,4,3,2,1,0].map(k=>{const[x,v]=ds(k);return`<div class='dy'><i class='s${(v.quiz!=null?1:0)+(v.lab?1:0)}'></i>${x.slice(8)}</div>`}).join('')+`</div><p class='mu'>Full colour means the daily quiz and the daily lab were both done.</p><h3>Quiz accuracy by topic</h3>`+TOP.map((t,k)=>{const s=P.qt[k],p=s&&s[1]?Math.round(100*s[0]/s[1]):0;return`<div class='tp'><span>${esc(t)}</span><progress value='${p}' max='100'></progress><span class='mu'>${s?s[0]+'/'+s[1]:'–'}</span></div>`}).join('')+`<h3>Labs</h3><div class='chips'>`+LS.slice(0,N).map((l,k)=>`<button class='chip ${done[k]?'ok':''}' data-lab='${k}'>${done[k]?'✓ ':''}${esc(l.t)}</button>`).join('')+`</div>`}
+/* ---- v5: art-directed dashboard ---- */
+async function home(){const i=await dayInfo(),d=P.days[today()]||{},cu=d.cu||{},tk=i.tasks.length,td=i.tasks.filter((_,k)=>cu[k]).length,N=LS.length-1,
+ st=[['Daily quiz',d.quiz!=null,d.quiz!=null?d.quiz+' of 5':'not started'],['Lab: '+LS[todayLab()].t,!!d.lab,d.lab?'complete':'not finished']].concat(tk?[['Team tasks',td==tk,td+' of '+tk+' ticked']]:[]),
+ n=st.filter(s=>s[1]).length,c=Object.keys(done).filter(k=>+k<N).length,q=Object.values(P.qt).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]),
+ ds=k=>{const x=new Date(Date.now()-k*864e5).toISOString().slice(0,10);return[x,P.days[x]||{}]},fin=x=>x.quiz!=null&&x.lab,
+ w=$('#who').textContent,nme=/saved|Could|Progress/.test(w)?'':w.split(' ')[0],hr=new Date().getHours(),gr=hr<12?'Good morning':hr<18?'Good afternoon':'Good evening',
+ ic={labs:`<svg viewBox='0 0 24 24'><circle cx='5' cy='6' r='2'/><circle cx='19' cy='6' r='2'/><circle cx='12' cy='18' r='2'/><path d='M7 6h10M6 8l5 8M18 8l-5 8'/></svg>`,vq:`<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'/><path d='M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17v.01'/></svg>`,vd:`<svg viewBox='0 0 24 24'><rect x='4' y='5' width='16' height='15' rx='3'/><path d='M4 10h16M9 15l2 2 4-4M8 3v4M16 3v4'/></svg>`,vr:`<svg viewBox='0 0 24 24'><path d='M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z'/><path d='M8 8h7M8 12h7'/></svg>`,vt:`<svg viewBox='0 0 24 24'><circle cx='9' cy='8' r='3'/><circle cx='17' cy='9' r='2.5'/><path d='M3 19c0-3 2.7-5 6-5s6 2 6 5M15 14c3 0 6 1.5 6 4.5'/></svg>`},
+ tile=(v,t,s)=>`<button class='tile' data-v='${v}'><i>${ic[v]}</i><b>${t}</b><span>${s}</span></button>`;
+ let sk=0;for(let k=fin(ds(0)[1])?0:1;k<90&&fin(ds(k)[1]);k++)sk++;
+ $('#vh').innerHTML=`<div class='hero'><svg class='net' viewBox='0 0 220 140'><path d='M20 100L80 40L150 80L200 20M80 40L70 120L150 80' stroke='#fff' stroke-opacity='.4' fill='none'/><g fill='#fff'><circle cx='20' cy='100' r='5'/><circle cx='80' cy='40' r='7'/><circle cx='150' cy='80' r='6'/><circle cx='200' cy='20' r='5'/><circle cx='70' cy='120' r='4'/></g></svg><div><p class='kick'>SNOC \u00b7 Network Operations Centre</p><h2>${gr}${nme?', '+esc(nme):''}</h2><p>${n==st.length?'Everything for today is done. Nice work.':(st.length-n)+' to go today. Pick up where you left off.'}</p><span class='pill'>${sk}-day streak</span><span class='pill'>${c} of ${N} labs</span><span class='pill'>${q[1]?Math.round(100*q[0]/q[1])+'% quiz accuracy':'no quiz answers yet'}</span></div><div class='ring' style='--p:${Math.round(100*n/st.length)}'><div><b>${n}/${st.length}</b><span>today</span></div></div></div><div class='tiles'>`+tile('labs','Labs',c+' of '+N+' finished')+tile('vq','Quiz',q[1]?q[1]+' answered so far':'Practise by topic')+tile('vd','Daily tasks',n+' of '+st.length+' done today')+tile('vr','Cheat sheet','CCNA and network help')+(ADM&&DB?tile('vt','Admin','Monitor apprentices'):'')+`</div><div class='cols'><div class='box' style='margin:0'><h3>Today</h3><progress value='${n}' max='${st.length}' style='width:100%'></progress>`+(i.note?`<div class='bx'><b>From your team lead:</b> ${esc(i.note)}</div>`:'')+`<ol class='tk'>`+st.map(s=>`<li class='${s[1]?'ok':''}'>${esc(s[0])}: ${s[2]}</li>`).join('')+`</ol><p><button class='on' data-dq='1'>Start daily quiz</button> <button data-lab='${todayLab()}'>Open today\u2019s lab</button></p></div><div class='box' style='margin:0'><h3>Last 7 days</h3><div class='wk'>`+[6,5,4,3,2,1,0].map(k=>{const[x,v]=ds(k);return`<div class='dy'><i class='s${(v.quiz!=null?1:0)+(v.lab?1:0)}'></i>${x.slice(8)}</div>`}).join('')+`</div><p class='mu'>Full colour means the daily quiz and lab were both done.</p><h3 style='margin-top:16px'>Quiz accuracy</h3>`+TOP.map((t,k)=>{const s=P.qt[k],p=s&&s[1]?Math.round(100*s[0]/s[1]):0;return`<div class='tp'><span>${esc(t)}</span><progress value='${p}' max='100'></progress><span class='mu'>${s?s[0]+'/'+s[1]:'\u2013'}</span></div>`}).join('')+`</div></div><div class='box tip'><h3>Tip of the day</h3>${tipHtml()}</div>`}
+/* ---- v6: lab helpers, grouped lab list, admin area ---- */
+function ran(k,re){return K(k).log.some(l=>re.test(l))}
+function wire(p){const id={};S.devs.forEach(d=>id[d.k]=d.id);p.forEach(([a,b])=>cable(id[a],id[b]))}
+function rif(k,p,ip,up){K(k).ifs[p]={ip,mask:M,up:up===0?0:1}}
+function pcs(k,ip,gw,m){const d=K(k);d.ip=ip;d.gw=gw||'';if(m)d.mask=m}
+function lst(f){return LS.map((l,i)=>[l,i]).filter(x=>f(x[0])).map(x=>`<button data-ls="${x[1]}" class="${x[1]==S.L?'on':''}">${done[x[1]]?'✓ ':''}${esc(x[0].t)}</button>`).join('')}
+async function team(){const el=$('#vt');el.textContent='Loading…';
+ try{const s=await DB.collection('progress').get(),u=await claude.use('user'),pr=await u.profiles(s.docs.map(x=>x.id)),N=LS.length-1,T=today();
+  if(!s.docs.length){el.innerHTML='<h2>Admin</h2><p>Nobody has saved progress yet. Share the page with apprentices as Contributors so their progress can be saved.</p>';return}
+  const sum=o=>Object.values(o||{}).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]),pct=q=>q[1]?Math.round(100*q[0]/q[1])+'%':'–',
+  R=s.docs.map(x=>{const v=x.data(),dy=v.days||{},ad=Object.keys(dy).filter(k=>dy[k].quiz!=null||dy[k].lab).sort(),last=ad.length?ad[ad.length-1]:null;
+   return{n:(pr[x.id]&&pr[x.id].name)||'Apprentice',v,dy,q:sum(v.qt),dn:Object.keys(v.done||{}).filter(k=>+k<N),t:dy[T]||{},last,age:last?Math.floor((Date.parse(T)-Date.parse(last))/864e5):null}}).sort((a,b)=>(a.n>b.n)-(a.n<b.n)),
+  act=R.filter(r=>r.t.quiz!=null||r.t.lab).length,att=R.filter(r=>r.age===null||r.age>=3).length,tq=R.reduce((a,r)=>[a[0]+r.q[0],a[1]+r.q[1]],[0,0]),al=Math.round(10*R.reduce((a,r)=>a+r.dn.length,0)/R.length)/10,
+  st=(b,t)=>`<div class='stat'><b>${b}</b><span>${t}</span></div>`;
+  el.innerHTML=`<h2>Admin</h2><p class='mu'>Progress for every apprentice who has used the app. ${T}</p><div class='stats'>`+st(R.length,'apprentices')+st(act+' of '+R.length,'active today')+st(al+' of '+N,'average labs finished')+st(pct(tq),'team quiz accuracy')+st(att,'need a nudge (3+ days quiet)')+`</div>`+R.map(r=>{const w=r.age===null||r.age>=3,dn=r.v.done||{};return`<details class='box'><summary><b>${esc(r.n)}</b><span class='chip ${w?'':'ok'}' style='${w?'border-color:var(--wn)':''}'>${r.last?(r.age==0?'active today':r.age+' days ago'):'not started'}</span><span class='mu'>labs ${r.dn.length}/${N} · quiz ${pct(r.q)} (${r.q[1]} answered) · today: quiz ${r.t.quiz!=null?r.t.quiz+'/5':'–'}, lab ${r.t.lab?'done':'–'}</span></summary><h3 style='margin-top:14px'>Quiz accuracy</h3>`+TOP.map((t,k)=>{const q=(r.v.qt||{})[k]||[0,0];return`<div class='tp'><span>${esc(t)}</span><progress value='${q[1]?Math.round(100*q[0]/q[1]):0}' max='100'></progress><span class='mu'>${q[1]?q[0]+'/'+q[1]:'–'}</span></div>`}).join('')+`<h3>Labs</h3><div class='chips'>`+LS.slice(0,N).map((l,k)=>`<span class='chip ${dn[k]?'ok':''}'>${dn[k]?'✓ ':''}${esc(l.t)}</span>`).join('')+`</div><h3>Last 14 days</h3><div class='wk'>`+Array.from({length:14},(_,i)=>13-i).map(k=>{const x=new Date(Date.now()-k*864e5).toISOString().slice(0,10),v=r.dy[x]||{};return`<div class='dy'><i class='s${(v.quiz!=null?1:0)+(v.lab?1:0)}'></i>${x.slice(8)}</div>`}).join('')+`</div></details>`}).join('')}
+ catch(e){el.textContent='Could not load admin data.'}}
+/* ---- v7: tip of the day ---- */
+const TIPS=["Troubleshoot bottom-up|Check the cable and link lights first, then IP settings, then routing. Most faults are found in the first two steps.",
+"Run show ip interface brief first|On a Cisco device it lists every interface, its IP and its status in one table. It is the fastest way to spot a shut or unplugged port.",
+"169.254.x.x means DHCP failed|A Windows PC that cannot get an address from a DHCP server gives itself one in 169.254.0.0/16. Check the DHCP server and the cable, not the PC.",
+"Ping an IP, then a name|If pinging 8.8.8.8 works but pinging a website name fails, the network is fine and the fault is DNS.",
+"Usable hosts = 2^host bits minus 2|A /24 has 8 host bits, so 256 minus 2 gives 254 usable addresses. The two lost are the network and broadcast addresses.",
+"Switches use MACs, routers use IPs|A switch forwards frames at Layer 2 by MAC address. A router forwards packets at Layer 3 by IP address and joins different networks.",
+"The gateway must be on the PC’s own subnet|If the default gateway is outside the PC’s network, the PC cannot even reach it, so nothing leaves the LAN.",
+"Administratively down means shutdown|The interface was switched off in the config. Fix it with no shutdown in interface mode. Plain down usually means a cable or far-end problem.",
+"Routing must work both ways|A ping needs a route to the destination and a route back. When pings time out but the path forward looks fine, check the return route.",
+"Longest prefix match wins|When two routes match, the router uses the one with the longest mask. A /24 route beats a /16, and a default route is the last resort.",
+"Save your work|Changes live in running-config until you run copy running-config startup-config. Reboot without saving and they are gone.",
+"Use ? and Tab in IOS|Type ? at any point to see what can come next, and press Tab to complete a command. You rarely need to type a full command.",
+"Know the private ranges|10.0.0.0/8, 172.16.0.0/12 (172.16 to 172.31) and 192.168.0.0/16 are private. They are never routed on the public internet.",
+"Ping says if, traceroute says where|Ping tells you whether a destination answers. Traceroute lists each router on the way, so you can see where packets stop.",
+"Duplex mismatches are sneaky|A link that works but is very slow, with late collisions or errors in show interfaces, often has one side on auto and the other fixed.",
+"Straight-through or crossover|Unlike devices (PC to switch, switch to router) use straight-through. Like devices use crossover. Most modern ports sort this out automatically.",
+"DHCP is DORA|Discover, Offer, Request, Acknowledge. If a client is stuck, find out which of the four messages is missing.",
+"ARP maps IP to MAC|Before sending on a LAN, a host asks who has this IP and learns the MAC. Run arp -a on a PC to see what it has learned.",
+"Admin distance picks the better source|Connected is 0, static is 1, EIGRP 90, OSPF 110 and RIP 120. The lowest number wins when several sources know the same network.",
+"Different VLANs need a router|VLANs are separate Layer 2 networks. Even on the same switch, traffic between them has to be routed.",
+"Change one thing, then test|Fixing two things at once means you never learn which one worked. Make one change and test it before the next.",
+"Write down the config before you change it|A saved copy of the working config means a bad change can always be undone.",
+"SSH over Telnet|Telnet (port 23) sends everything in clear text, including passwords. SSH (port 22) encrypts the session. Use SSH.",
+"Status up, protocol down|The physical link is fine but Layer 2 is not: wrong encapsulation, missing keepalives, or the other end is not configured.",
+"Routers split broadcast domains|A broadcast reaches every device in the same VLAN or subnet but stops at a router. Smaller broadcast domains mean less noise.",
+"ipconfig /all shows the detail|It adds the MAC address, DHCP server, lease times and DNS servers to the basic address, mask and gateway.",
+"Block size shortcut|Subtract the mask octet from 256. A mask of .192 gives blocks of 64, so subnets start at 0, 64, 128 and 192.",
+"Read the whole error message|A ping reply that says unreachable from a router means the router answered but has no route. A timeout means nothing answered at all.",
+"TTL counts the hops|Each router drops the TTL by one. Windows starts at 128, so a reply with TTL 126 crossed two routers.",
+"Ask what changed|Most outages follow a change. Check recent changes, new cables and config edits before looking anywhere else."];
+function tipHtml(){const t=TIPS[dayN()%TIPS.length].split('|');return`<p><b>${esc(t[0])}</b></p><p class='mu'>${esc(t[1])}</p>`}
+/* ---- v9: roster, PIN login, user admin ---- */
+let CUR=null,RO=[],LOCK={n:0,t:0},DELC=null;
+const hex=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join(''),hp=(salt,pin)=>hex(salt+':'+pin),rid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4),blank=()=>{done={};P={qt:{},days:{}}};
+async function roster(){try{const[a,b]=await Promise.all([DB.collection('roster').get(),DB.collection('pins').get()]),pm={};b.docs.forEach(x=>pm[x.id]=x.data());RO=a.docs.map(x=>Object.assign({id:x.id},x.data(),pm[x.id]||{})).sort((p,q)=>(p.name||'').localeCompare(q.name||''))}catch(e){RO=[]}return RO}
+async function showGate(msg){const g=$('#gate');g.hidden=false;await roster();
+ g.innerHTML=`<div class='card' style='width:100%;max-width:420px'><h2>SNOC NetLab</h2><p class='mu'>Choose your name to sign in.</p>`+(msg?`<div class='bx'>${esc(msg)}</div>`:'')+(RO.length?`<div class='ls'>`+RO.map(r=>`<button data-gu='${esc(r.id)}'>${esc(r.name)}</button>`).join('')+`</div>`:`<p>No users have been added yet.${ADM?' Continue as admin, then add apprentices in the Admin tab.':' Ask your team lead to add you.'}</p>`)+(ADM?`<p><button data-gadm='1'>Continue as admin without a profile</button></p>`:'')+`</div>`}
+function pinStep(id){const r=RO.find(x=>x.id==id),su=!r.pin;$('#gate').innerHTML=`<div class='card' style='width:100%;max-width:420px'><h2>${esc(r.name)}</h2><p class='mu'>${su?'First time here. Choose a PIN of 4 to 6 digits.':'Enter your PIN.'}</p><p><input id='p1' type='password' inputmode='numeric' maxlength='6' autocomplete='off' placeholder='PIN' style='width:100%'></p>`+(su?`<p><input id='p2' type='password' inputmode='numeric' maxlength='6' autocomplete='off' placeholder='Repeat PIN' style='width:100%'></p>`:'')+`<div id='pm' style='min-height:22px;color:var(--wn);font-size:13px'></div><p><button class='on' data-go='${esc(id)}'>${su?'Set PIN and sign in':'Sign in'}</button> <button data-gback='1'>Back</button></p></div>`;$('#p1').focus()}
+async function pinGo(id){const r=RO.find(x=>x.id==id),v=$('#p1').value.trim(),pm=t=>{$('#pm').textContent=t};
+ if(!/^\d{4,6}$/.test(v))return pm('Use 4 to 6 digits.');
+ if(!r.pin){if($('#p2').value.trim()!==v)return pm('The two PINs do not match.');const salt=rid(),h=await hp(salt,v);
+  try{await DB.doc('pins/'+id).set({salt,pin:h})}catch(e){return pm('Could not save your PIN. Try again.')}
+  return enter(r)}
+ if(Date.now()<LOCK.t)return pm('Too many tries. Wait a minute.');
+ if(await hp(r.salt,v)===r.pin){LOCK.n=0;return enter(r)}
+ if(++LOCK.n>=5){LOCK.n=0;LOCK.t=Date.now()+6e4}
+ pm('That PIN is not right.')}
+async function enter(r){CUR=r;ID=r.id;try{sessionStorage.setItem('netlab-sess',r.id)}catch(e){}
+ blank();try{const s=await DB.doc('progress/'+ID).get();if(s.exists){const x=s.data();Object.assign(done,x.done||{});P.qt=x.qt||{};P.days=x.days||{}}}catch(e){}
+ $('#gate').hidden=true;$('#lo').hidden=false;$('#who').textContent=r.name;side();view('vh')}
+async function addUser(){const n=$('#nu').value.trim(),m=t=>{$('#um').textContent=t};if(!n)return m('Type a name first.');
+ if(RO.some(r=>r.name.toLowerCase()==n.toLowerCase()))return m('That name already exists.');
+ try{await DB.doc('roster/'+rid()).set({name:n,created:Date.now()})}catch(e){return m('Could not add the user. Only the owner and editors can.')}
+ await team()}
+async function resetPin(id){try{await DB.doc('pins/'+id).delete()}catch(e){}await team()}
+async function delUser(id){if(DELC!=id){DELC=id;return await team()}DELC=null;try{await DB.doc('roster/'+id).delete();await DB.doc('pins/'+id).delete();await DB.doc('progress/'+id).delete()}catch(e){}await team()}
+async function team(){const el=$('#vt');el.textContent='Loading…';
+ try{await roster();const s=await DB.collection('progress').get(),pm={};s.docs.forEach(x=>pm[x.id]=x.data());const N=LS.length-1,T=today(),
+ sum=o=>Object.values(o||{}).reduce((a,b)=>[a[0]+b[0],a[1]+b[1]],[0,0]),pct=q=>q[1]?Math.round(100*q[0]/q[1])+'%':'–',
+ R=RO.map(r=>{const v=pm[r.id]||{},dy=v.days||{},ad=Object.keys(dy).filter(k=>dy[k].quiz!=null||dy[k].lab).sort(),last=ad.length?ad[ad.length-1]:null;return{n:r.name,v,dy,q:sum(v.qt),dn:Object.keys(v.done||{}).filter(k=>+k<N),t:dy[T]||{},last,age:last?Math.floor((Date.parse(T)-Date.parse(last))/864e5):null}}),
+ act=R.filter(r=>r.t.quiz!=null||r.t.lab).length,att=R.filter(r=>r.age===null||r.age>=3).length,tq=R.reduce((a,r)=>[a[0]+r.q[0],a[1]+r.q[1]],[0,0]),al=R.length?Math.round(10*R.reduce((a,r)=>a+r.dn.length,0)/R.length)/10:0,
+ st=(b,t)=>`<div class='stat'><b>${b}</b><span>${t}</span></div>`;
+ el.innerHTML=`<h2>Admin</h2><h3>Users</h3><div class='box' style='margin:0 0 14px'><p class='mu'>Add each apprentice by name. They choose their own PIN the first time they sign in. Reset a PIN if someone forgets it.</p><p><input id='nu' placeholder='Full name' maxlength='40'> <button class='on' data-ua='1'>Add user</button></p><div id='um' class='mu'></div>`+(RO.length?'<table>'+RO.map(r=>`<tr><td><b>${esc(r.name)}</b></td><td>${r.pin?'PIN set':'waiting for first sign-in'}</td><td><button data-urs='${esc(r.id)}'>Reset PIN</button> <button data-udl='${esc(r.id)}'>${DELC==r.id?'Confirm remove':'Remove'}</button></td></tr>`).join('')+'</table>':'<p>No users yet.</p>')+`</div>`+(R.length?`<h3>Progress</h3><div class='stats'>`+st(R.length,'apprentices')+st(act+' of '+R.length,'active today')+st(al+' of '+N,'average labs finished')+st(pct(tq),'team quiz accuracy')+st(att,'need a nudge (3+ days quiet)')+`</div>`+R.map(r=>{const w=r.age===null||r.age>=3,dn=r.v.done||{};return`<details class='box'><summary><b>${esc(r.n)}</b><span class='chip ${w?'':'ok'}' style='${w?'border-color:var(--wn)':''}'>${r.last?(r.age==0?'active today':r.age+' days ago'):'not started'}</span><span class='mu'>labs ${r.dn.length}/${N} · quiz ${pct(r.q)} (${r.q[1]} answered) · today: quiz ${r.t.quiz!=null?r.t.quiz+'/5':'–'}, lab ${r.t.lab?'done':'–'}</span></summary><h3 style='margin-top:14px'>Quiz accuracy</h3>`+TOP.map((t,k)=>{const q=(r.v.qt||{})[k]||[0,0];return`<div class='tp'><span>${esc(t)}</span><progress value='${q[1]?Math.round(100*q[0]/q[1]):0}' max='100'></progress><span class='mu'>${q[1]?q[0]+'/'+q[1]:'–'}</span></div>`}).join('')+`<h3>Labs</h3><div class='chips'>`+LS.slice(0,N).map((l,k)=>`<span class='chip ${dn[k]?'ok':''}'>${dn[k]?'✓ ':''}${esc(l.t)}</span>`).join('')+`</div><h3>Last 14 days</h3><div class='wk'>`+Array.from({length:14},(_,i)=>13-i).map(k=>{const x=new Date(Date.now()-k*864e5).toISOString().slice(0,10),v=r.dy[x]||{};return`<div class='dy'><i class='s${(v.quiz!=null?1:0)+(v.lab?1:0)}'></i>${x.slice(8)}</div>`}).join('')+`</div></details>`}).join(''):'')}
+ catch(e){el.textContent='Could not load admin data.'}}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.gu)pinStep(d.gu);else if(d.go)pinGo(d.go);else if(d.gback)showGate();
+ else if(d.gadm){CUR=null;ID=null;blank();$('#gate').hidden=true;$('#lo').hidden=false;$('#who').textContent='Admin';side();view('vh')}
+ else if(b.id=='lo'){try{sessionStorage.removeItem('netlab-sess')}catch(x){}CUR=null;ID=null;blank();$('#lo').hidden=true;$('#who').textContent='';showGate()}
+ else if(d.ua)addUser();else if(d.urs)resetPin(d.urs);else if(d.udl)delUser(d.udl)});
+document.addEventListener('keydown',e=>{if(e.key!='Enter'||!/^p[12]$/.test(e.target.id||''))return;const p2=$('#p2');if(e.target.id=='p1'&&p2)p2.focus();else{const b=document.querySelector('[data-go]');if(b)b.click()}});
+(async()=>{try{if(!window.claude)throw 0;const[db,u]=await Promise.all([claude.use('db'),claude.use('user')]);
+ ADM=!!(u&&(await u.isOwner()||await u.canEdit()));DB=db;if(!DB)throw 0;
+ if(ADM)document.querySelector('[data-v="vt"]').hidden=false;
+ await roster();let sid=null;try{sid=sessionStorage.getItem('netlab-sess')}catch(e){}
+ const r=RO.find(x=>x.id==sid);if(r)await enter(r);else await showGate()}
+ catch(e){$('#who').textContent='Progress saved on this device only'}})();
+load(0);home();
+</script></body></html>
+
+</body></html>
